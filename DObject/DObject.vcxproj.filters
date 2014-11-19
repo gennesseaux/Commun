@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{a47aa63c-e522-459c-aecd-fd526ad7859d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{d422eb58-e3ef-4f1e-9c0a-a31c35096cac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DObject\DObjBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjEtat.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjGlobal.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjListe.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjListe.tpl.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjObserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjParent.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjState.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\DObjUuid.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\IDObjBase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DObject\IDObjListe.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\DObject\DObjBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjEtat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjObserver.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjParent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\dObjState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjUuid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\DObject\ObjBase.cd" />
+  </ItemGroup>
+</Project>
