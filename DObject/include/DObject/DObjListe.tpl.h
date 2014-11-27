@@ -191,12 +191,12 @@ void DObject::CDObjListe<TypeClass>::InsertAt(size_t nIndex, TypeClass* pObj)
 	// Augmentation de la taille allouée à la liste
 	m_liste.reserve(GetCount() + 2);
 
-	// On ajoute l'objet à la liste avec la méthode Add afin d'avoir un point d'enté unique dans la liste.
-	// Ensuite on insère l'objet à la position demandé puis on supprime le dernier élément de la liste
+	// On ajoute l'objet à la liste avec la méthode Add afin d'avoir un point d'entré unique dans la liste.
+	// Ensuite on déplace l'objet à la position demandé.
 	if (Add(pObj)>0 && nIndex < m_liste.size())
 	{
-		m_liste.emplace(m_liste.begin() + nIndex - 1, pObj);
-		m_liste.erase(m_liste.end() - 1);
+ 		m_liste.emplace(m_liste.begin() + nIndex, pObj);
+ 		m_liste.erase(m_liste.end()-1);
 	}
 }
 

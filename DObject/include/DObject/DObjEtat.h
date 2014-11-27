@@ -32,6 +32,11 @@ namespace DObject
 		CDObjEtat(const CDObjEtat &source);
 		//! Opérateur =
 		CDObjEtat &operator=(const CDObjEtat &source);
+		////! Constructeur de déplacement.
+		//CDObjEtat(CDObjEtat&& source);
+		////! Opérateur de déplacement
+		//CDObjEtat &operator=(CDObjEtat&& source);
+
 		//! Opérateur ==
 		bool operator==(const CDObjEtat &source) const;
 		//! Opérateur !=

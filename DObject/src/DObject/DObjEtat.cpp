@@ -23,10 +23,50 @@ namespace DObject
 	//! Opérateur =
 	CDObjEtat& CDObjEtat::operator=(const CDObjEtat& source)
 	{
-		ClonnerDonnees(source);
+		if(this != &source)
+		{
+			ClonnerDonnees(source);
+		}
 
 		return *this;
 	}
+
+	////! Constructeur de déplacement
+	//CDObjEtat::CDObjEtat(CDObjEtat&& source)
+	//{
+	//	m_bInitaliser = source.m_bInitaliser;
+	//	m_bModifier = source.m_bModifier;
+	//	m_bPourSupprimer = source.m_bPourSupprimer;
+	//	m_bAcquis = source.m_bAcquis;
+	//	m_bSupprimer = source.m_bSupprimer;
+
+	//	source.m_bInitaliser = false;
+	//	source.m_bModifier = false;
+	//	source.m_bPourSupprimer = false;
+	//	source.m_bAcquis = false;
+	//	source.m_bSupprimer = false;
+	//}
+
+	////! Opérateur de déplacement
+	//CDObjEtat& CDObjEtat::operator=(CDObjEtat&& source)
+	//{
+	//	if(this != &source)
+	//	{
+	//		m_bInitaliser = source.m_bInitaliser;
+	//		m_bModifier = source.m_bModifier;
+	//		m_bPourSupprimer = source.m_bPourSupprimer;
+	//		m_bAcquis = source.m_bAcquis;
+	//		m_bSupprimer = source.m_bSupprimer;
+
+	//		source.m_bInitaliser = false;
+	//		source.m_bModifier = false;
+	//		source.m_bPourSupprimer = false;
+	//		source.m_bAcquis = false;
+	//		source.m_bSupprimer = false;
+	//	}
+
+	//	return *this;
+	//}
 
 	//! Opérateur ==
 	bool CDObjEtat::operator==( const CDObjEtat &source ) const

@@ -37,6 +37,11 @@ namespace DObject
 		CDObjTest(const CDObjTest &source);
 		//! Opérateur =
 		CDObjTest &operator=(const CDObjTest &source);
+		////! Constructeur de déplacement.
+		//CDObjTest(CDObjTest&& source);
+		////! Opérateur de déplacement
+		//CDObjTest &operator=(CDObjTest&& source);
+
 		//! Clonage des données utilisée par le constructeur par copie ainsi que l'opérateur =
 		void ClonnerDonnees(const CDObjTest &source);
 

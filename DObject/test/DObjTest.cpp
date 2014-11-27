@@ -41,10 +41,58 @@ namespace DObject
 	CDObjTest & CDObjTest::operator=(const CDObjTest &source)
 	{
 		/* Clonage des données. */
-		ClonnerDonnees(source);
+		if(this != &source)
+		{
+			ClonnerDonnees(source);
+		}
 
 		return *this;
 	}
+
+	////! Constructeur de déplacement.
+	//CDObjTest::CDObjTest(CDObjTest&& source)
+	//{
+	//	_string1 = source._string1;
+	//	_string2 = source._string2;
+	//	_l1 = source._l1;
+	//	_l2 = source._l2;
+	//	_ul3 = source._ul3;
+	//	_pointeur = source._pointeur;
+	//	_pointeurListe = source._pointeurListe;
+
+	//	source._string1 = "";
+	//	source._string2 = "";
+	//	source._l1 = DefLong;
+	//	source._l2 = DefLong;
+	//	source._ul3 = DefULong;
+	//	source._pointeur = nullptr;
+	//	source._pointeurListe = nullptr;
+	//}
+
+	////! Opérateur de déplacement
+	//CDObjTest & CDObjTest::operator=(CDObjTest&& source)
+	//{
+	//	if(this != &source)
+	//	{
+	//		_string1 = source._string1;
+	//		_string2 = source._string2;
+	//		_l1 = source._l1;
+	//		_l2 = source._l2;
+	//		_ul3 = source._ul3;
+	//		_pointeur = source._pointeur;
+	//		_pointeurListe = source._pointeurListe;
+
+	//		source._string1 = "";
+	//		source._string2 = "";
+	//		source._l1 = DefLong;
+	//		source._l2 = DefLong;
+	//		source._ul3 = DefULong;
+	//		source._pointeur = nullptr;
+	//		source._pointeurListe = nullptr;
+	//	}
+
+	//	return *this;
+	//}
 
 	void CDObjTest::ClonnerDonnees(const CDObjTest &source)
 	{

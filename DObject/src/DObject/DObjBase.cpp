@@ -60,7 +60,6 @@ namespace DObject
 		return pObjBase->Delete();
 	}
 
-
 	//! Constructeur par recopie
 	CDObjBase::CDObjBase(const CDObjBase& source)
 	{
@@ -70,10 +69,34 @@ namespace DObject
 	//! Opérateur =
 	CDObjBase& CDObjBase::operator=(const CDObjBase& source)
 	{
-		ClonnerDonnees(source);
+		if(this != &source)
+		{
+			ClonnerDonnees(source);
+		}
 
 		return *this;
 	}
+
+	////! Constructeur de déplacement
+	//CDObjBase::CDObjBase(CDObjBase&& source)
+	//{
+	//	m_ulId = source.m_ulId;
+
+	//	source.m_ulId = DefULong;
+	//}
+
+	////! Opérateur de déplacement
+	//CDObjBase& CDObjBase::operator=(CDObjBase&& source)
+	//{
+	//	if(this != &source)
+	//	{
+	//		m_ulId = source.m_ulId;
+
+	//		source.m_ulId = DefULong;
+	//	}
+
+	//	return *this;
+	//}
 
 	//! Clone les données de l'objet.
 	void CDObjBase::ClonnerDonnees(const CDObjBase &source)

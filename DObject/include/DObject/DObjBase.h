@@ -31,6 +31,10 @@ namespace DObject
 		CDObjBase(const CDObjBase &source);														
 		//! Opérateur =
 		CDObjBase &operator=(const CDObjBase &source);
+		////! Constructeur de déplacement
+		//CDObjBase(CDObjBase&& source);														
+		////! Opérateur de déplacement
+		//CDObjBase &operator=(CDObjBase&& source);
 		//! Clone les données (Utilisé par le constructeur par copie et l'opérateur =)
 		void ClonnerDonnees(const CDObjBase &source);
 
