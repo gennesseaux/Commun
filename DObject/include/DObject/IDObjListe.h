@@ -42,6 +42,10 @@ namespace DObject
 		virtual void AddParent(CDObjEtat* pObjEtat) = 0;
 		//! Retire un parent de type CDObjEtat*
 		virtual void RemoveParent(CDObjEtat* pObjEtat) = 0;
+		//!
+		virtual void AddEnfant(CDObjEtat* pObjEtat) = 0;
+		//!
+		virtual void RemoveEnfant(CDObjEtat* pObjEtat) = 0;
 
 	//! Gestion interne de la liste des objets
 	private:

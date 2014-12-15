@@ -45,14 +45,14 @@ namespace DObject
 
 	public:
 		//! Ajout d'un parent de type IDObjBase*
-		void Add(IDObjBase* pIObjBase);
+		void Add(IDObjBase* pIObjEnfant);
 		//! Ajout d'un parent de type IDObjListe*
-		void Add(IDObjListe* pObjListe);
+		void Add(IDObjListe* pIObjEnfantListe);
 
 		//! Retire un parent de type IDObjBase*
-		void Remove(IDObjBase* pIObjBase);
+		void Remove(IDObjBase* pIObjEnfant);
 		//! Retire un parent de type IDObjListe*
-		void Remove(IDObjListe* pObjListe);
+		void Remove(IDObjListe* pIObjEnfantListe);
 
 		//! Retourne le nombre de parents
 		size_t GetCount();

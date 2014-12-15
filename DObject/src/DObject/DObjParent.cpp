@@ -24,44 +24,44 @@ DObject::CDObjParent::CDObjParent(const CDObjParent &source)
 }
 
 //! Ajout d'un parent de type IDObjBase*
-void DObject::CDObjParent::Add(IDObjBase* pIObjBase)
+void DObject::CDObjParent::Add(IDObjBase* pIObjEnfant)
 {
 	bool bExiste = false;
 	for (auto &parent : m_mObjBaseParent)
 	{
 		IDObjBase* pParent = parent;
-		if (pParent == pIObjBase)
+		if (pParent == pIObjEnfant)
 			bExiste = true;
 	}
 	if (!bExiste)
-		m_mObjBaseParent.emplace_back(pIObjBase);
+		m_mObjBaseParent.emplace_back(pIObjEnfant);
 }
 
 //! Ajout d'un parent de type IDObjListe*
-void DObject::CDObjParent::Add(IDObjListe* pObjBaseListe)
+void DObject::CDObjParent::Add(IDObjListe* pIObjEnfantListe)
 {
 	bool bExiste = false;
 	for (auto &parent : m_mObjListeParent)
 	{
 		IDObjListe* pParent = parent;
-		if (pParent == pObjBaseListe)
+		if (pParent == pIObjEnfantListe)
 			bExiste = true;
 	}
 	if (!bExiste)
-		m_mObjListeParent.emplace_back(pObjBaseListe);
+		m_mObjListeParent.emplace_back(pIObjEnfantListe);
 }
 
-void DObject::CDObjParent::Remove(IDObjBase* pIObjBase)
+void DObject::CDObjParent::Remove(IDObjBase* pIObjEnfant)
 {
-	auto it = std::find(m_mObjBaseParent.begin(), m_mObjBaseParent.end(), pIObjBase);
+	auto it = std::find(m_mObjBaseParent.begin(), m_mObjBaseParent.end(), pIObjEnfant);
 
 	if (it != m_mObjBaseParent.end())
 		m_mObjBaseParent.erase(it);
 }
 
-void DObject::CDObjParent::Remove(IDObjListe* pObjListe)
+void DObject::CDObjParent::Remove(IDObjListe* pIObjEnfantListe)
 {
-	auto it = std::find(m_mObjListeParent.begin(), m_mObjListeParent.end(), pObjListe);
+	auto it = std::find(m_mObjListeParent.begin(), m_mObjListeParent.end(), pIObjEnfantListe);
 
 	if (it != m_mObjListeParent.end())
 		m_mObjListeParent.erase(it);

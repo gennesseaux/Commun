@@ -74,6 +74,10 @@ namespace DObject
 		unsigned long GetUL3();
 		bool SetUL3(unsigned long ul3);
 
+		
+		CDObjTestListe* GetPointeurListe(bool bInit = true);
+
+
 	private:
 		// Données membres
 		std::string		_string1;

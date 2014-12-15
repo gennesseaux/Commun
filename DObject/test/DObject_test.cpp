@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include <vld.h>
 #include <functional>
 #include <memory>
 
@@ -100,7 +101,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 
-	if (0)
+	if (1)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("test2");
@@ -173,9 +174,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		pListe1->SortById();
 
 		delete pListe1;
+		delete gp;
 	}
 
-	if (0)
+	if (1)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 
@@ -195,7 +197,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Tester la suppression d'un obj qui est dans plusieurs listes
-	if (0)
+	if (1)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");		//t1->SetAcquis(true);
 
@@ -216,7 +218,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Tester la sauvegarde d'un obj qui est dans plusieurs listes
-	if (0)
+	if (1)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("test2");
@@ -242,9 +244,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		assert(pListe1->EstAcquis());
 		assert(t1->EstAcquis());
 		assert(t3->EstAcquis());
+
+		delete pListe1;
+		delete pListe2;
 	}
 
-	if(0)
+	if(1)
 	{
 		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
 
@@ -256,12 +261,47 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		IDObjListe* pObjListe3 = dynamic_cast<IDObjListe*>(pListe1);
 		assert(pObjListe3);
+
+		delete pListe1;
 	}
 
 	if (1)
 	{
-		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("Parent");		t1->SetAcquis(true);
-		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("Enfant 1");		t2->SetAcquis(true);
+		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
+		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("(t2) Enfant 1");	t2->SetAcquis(true);
+ 	
+		t2->AddParent(t1);
+
+		delete t1;
+		delete t2;
+	}
+
+	if (1)
+	{
+		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
+		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
+ 	
+		pListe1->AddParent(t1);
+
+		delete t1;
+		delete pListe1;
+	}
+
+	if (1)
+	{
+		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1 Parent");
+		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Enfant");		t1->SetAcquis(true);
+ 	
+		t1->AddParent(pListe1);
+
+		delete pListe1;
+		delete t1;
+	}
+
+	if (1)
+	{
+		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
+		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("(t2) Enfant 1");	t2->SetAcquis(true);
 
  		// 1er test
  		{
@@ -270,7 +310,7 @@ int _tmain(int argc, _TCHAR* argv[])
  			assert(P1 == t1);
  
  			// Lorsqu'un enfant est modifié, alors le parent doit en être avertis
- 			t2->SetString1("Enfant 1 de Parent");
+ 			t2->SetString1("(t2) Enfant 1 de Parent");
  
 			assert(t2->EstModifier() == true);
 			assert(t1->EstModifier() == false);
@@ -308,6 +348,21 @@ int _tmain(int argc, _TCHAR* argv[])
 			assert(t1->SontEnfantsModifier() == true);
 		}
 
+		delete t1;
+		delete t2;
+		delete t3;
+		delete pListe1;
+	}
+
+	if (1)
+	{
+		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("Parent");		t1->SetAcquis(true);
+		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
+
+		pListe1->AddParent(t1);
+
+		delete pListe1;
+		delete t1;
 	}
 
 
@@ -325,6 +380,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		assert(gp->EstModifier() == false);
 		assert(gp->SontEnfantsModifier() == true);
 		assert(pListe->EstModifier() == true);
+
+		delete gp;
+		delete pListe;
 	}
 
 

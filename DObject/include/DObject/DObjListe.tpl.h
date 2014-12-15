@@ -21,6 +21,18 @@
 template<class TypeClass>
 DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 {
+	while(m_mObjBaseEnfant.size())
+	{
+		IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
+		pIObjBase->RemoveParent(this);
+	}
+
+	while(m_mObjListeEnfant.size())
+	{
+		IDObjListe* pIObjListe = m_mObjListeEnfant[0];
+		pIObjListe->RemoveParent(this);
+	}
+
 	// 
 	while (GetParent<IDObjBase*>())
 	{
@@ -41,6 +53,9 @@ DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 
 	//
 	RemoveAll();
+
+	// Libération mémoire
+	delete m_pParent; m_pParent = nullptr;
 }
 
 //! Verification
@@ -478,12 +493,18 @@ void DObject::CDObjListe<TypeClass>::AddParent(CDObjEtat* pObjEtat)
 		m_pParent = new CDObjParent();
 
 	IDObjBase* pIObjBase = dynamic_cast<IDObjBase*>(pObjEtat);
-	if (pIObjBase)
+	if(pIObjBase)
+	{
 		m_pParent->Add(pIObjBase);
+		pIObjBase->AddEnfant(this);
+	}
 
 	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
 	if (pObjListe)
+	{
 		m_pParent->Add(pObjListe);
+		pObjListe->AddEnfant(this);
+	}
 
 	this->RegisterObservateur(m_pParent);
 }
@@ -495,15 +516,75 @@ void DObject::CDObjListe<TypeClass>::RemoveParent(CDObjEtat* pObjEtat)
 		return;
 
 	IDObjBase* pIObjBase = dynamic_cast<IDObjBase*>(pObjEtat);
-	if (pIObjBase)
+	if(pIObjBase)
+	{
 		m_pParent->Remove(pIObjBase);
+		pIObjBase->RemoveEnfant(this);
+	}
 
 	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
 	if (pObjListe)
+	{
 		m_pParent->Remove(pObjListe);
+		pObjListe->RemoveEnfant(this);
+	}
 
 	if (m_pParent->GetCount()==0)
 		this->RemoveObservateur(m_pParent);
+}
+
+template<class TypeClass /*= CDObjBase*/>
+void DObject::CDObjListe<TypeClass>::AddEnfant(CDObjEtat* pObjEtat)
+{
+	IDObjBase* pIObjEnfant = dynamic_cast<IDObjBase*>(pObjEtat);
+	if(pIObjEnfant)
+	{
+		bool bExiste = false;
+		for(auto &enfant : m_mObjBaseEnfant)
+		{
+			IDObjBase* pParent = enfant;
+			if(pParent == pIObjEnfant)
+				bExiste = true;
+		}
+		if(!bExiste)
+			m_mObjBaseEnfant.emplace_back(pIObjEnfant);
+	}
+
+	IDObjListe* pIObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
+	if(pIObjListe)
+	{
+		bool bExiste = false;
+		for(auto &enfant : m_mObjListeEnfant)
+		{
+			IDObjListe* pParent = enfant;
+			if(pParent == pIObjListe)
+				bExiste = true;
+		}
+		if(!bExiste)
+			m_mObjListeEnfant.emplace_back(pIObjListe);
+	}
+}
+
+template<class TypeClass /*= CDObjBase*/>
+void DObject::CDObjListe<TypeClass>::RemoveEnfant(CDObjEtat* pObjEtat)
+{
+	IDObjBase* pIObjEnfant = dynamic_cast<IDObjBase*>(pObjEtat);
+	if(pIObjEnfant)
+	{
+		auto it = std::find(m_mObjBaseEnfant.begin(), m_mObjBaseEnfant.end(), pIObjEnfant);
+
+		if(it != m_mObjBaseEnfant.end())
+			m_mObjBaseEnfant.erase(it);
+	}
+
+	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
+	if(pObjListe)
+	{
+		auto it = std::find(m_mObjListeEnfant.begin(), m_mObjListeEnfant.end(), pObjListe);
+
+		if(it != m_mObjListeEnfant.end())
+			m_mObjListeEnfant.erase(it);
+	}
 }
 
 //! Retourne le parent de type CDObjBase* ou CDObListe<>*

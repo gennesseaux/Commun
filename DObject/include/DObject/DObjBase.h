@@ -17,6 +17,8 @@
 namespace DObject
 {
 	class CDObjParent;
+	class IDObjBase;
+	class IDObjListe;
 
 	class CDObjBase : public IDObjBase
 	{
@@ -113,7 +115,11 @@ namespace DObject
 		void RemoveParent(CDObjEtat* pObjEtat);
 		//! Retourne le parent de type CDObjBase* ou CDObjBaseListe*
 		template<class T> T GetParent();
-
+	protected:
+		//!
+		void AddEnfant(CDObjEtat* pObjEtat);
+		//!
+		void RemoveEnfant(CDObjEtat* pObjEtat);
 
 	public:
 		//! Prédicat de comparaison des objet 
@@ -130,7 +136,9 @@ namespace DObject
 		unsigned long	m_ulId;
 
  		//! Parent de l'objet
-		CDObjParent*	m_pParent = nullptr;
+		CDObjParent*				m_pParent = nullptr;
+		std::vector<IDObjBase*>		m_mObjBaseEnfant;
+		std::vector<IDObjListe*>	m_mObjListeEnfant;
 	};
  
  	//! Retourne le parent de type CDObjEtat*

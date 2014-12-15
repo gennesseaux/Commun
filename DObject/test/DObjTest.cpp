@@ -357,6 +357,27 @@ namespace DObject
 		return _string2;
 	}
 
+	CDObjTestListe* CDObjTest::GetPointeurListe(bool bInit)
+	{
+		// L'objet doit être initialisé
+		if (!Initialiser()) return nullptr;
+
+		// Si la liste n'existe pas, alosr on la crée. 
+		if (_pointeurListe == nullptr)
+		{
+			_pointeurListe = new CDObjTestListe("Liste enfant");
+			_pointeurListe->AddParent(this);
+		//	if (bInit) _pointeurListe->InitialiserAPartirDePrjIdent(m_ulId);
+		//}
+		//// 
+		//else if (_pointeurListe && _pointeurListe->GetPrjIdent() != m_ulId)
+		//{
+		//	delete _pointeurListe; _pointeurListe = nullptr;
+		//	return GetPointeurListe(bInit);
+		}
+
+		return _pointeurListe;
+	}
 
 
 
