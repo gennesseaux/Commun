@@ -10,6 +10,16 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\RcReader\RcReader.h" />
+    <ClInclude Include="include\RcReader\RcResourceDialog.h" />
+    <ClInclude Include="include\RcReader\RcResources.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\RcReader\RcReader.cpp" />
+    <ClCompile Include="src\RcReader\RcResourceDialog.cpp" />
+    <ClCompile Include="src\RcReader\RcResources.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{966A6830-49CF-43C3-8FAD-D8BF4A6054CC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -53,7 +63,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;..\Outils\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\..\Poco\Foundation\include</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
@@ -61,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\..\Outils\dev\bin\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -75,7 +85,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;..\Outils\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;..\..\Poco\Foundation\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,7 +94,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\..\Outils\dev\bin\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
