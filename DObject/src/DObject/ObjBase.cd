@@ -7,8 +7,8 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QABAAAFAABhAAoBCAAAZBAQEAFHQEAAxAEAhAgYAZCA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjBase.h</FileName>
+      <HashCode>QABAAAFAADhAAoBCAAAZDAQEAHGwEAAxAEAjAgYAZCA=</HashCode>
+      <FileName>include\DObject\DObjBase.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjEtat">
@@ -18,8 +18,8 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAQAQEQABBAAABCAAAcBQQEIFCQAABRAEAhAAAAQAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjEtat.h</FileName>
+      <HashCode>AAAQAQEQABBAAABCAAAcBQQEIFCwAABRAEAnAAAAQAA=</HashCode>
+      <FileName>include\DObject\DObjEtat.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjListe&lt;TypeClass&gt;">
@@ -29,8 +29,8 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QBZAAARAABoBAgGBAACABACEQgKAExARKIEjAAwQRCA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjListe.h</FileName>
+      <HashCode>QBZAAARAADoBAgGBAACADACEQiKAExARKIEjAAwQRCA=</HashCode>
+      <FileName>include\DObject\DObjListe.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjState">
@@ -41,7 +41,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAQAQAQAAAAAIAAgAAGABRAAAAAAAAAAAAgAAgAACA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjState.h</FileName>
+      <FileName>include\DObject\DObjState.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjStateListe">
@@ -52,30 +52,30 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>CAIAAAAAAAAAAAAAAQACCAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjState.h</FileName>
+      <FileName>include\DObject\DObjState.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjBaseListe">
     <Position X="1" Y="10.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjListe.h</FileName>
+      <FileName>include\DObject\DObjListe.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjParent">
-    <Position X="2" Y="3.5" Width="2.5" />
+    <Position X="1" Y="3.5" Width="2.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <InheritanceLine Type="DObject::DObjObservateur" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.562" Y="2.171" />
-        <Point X="2.562" Y="3.5" />
+        <Point X="2.312" Y="2.171" />
+        <Point X="2.312" Y="3.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAaQAAAAAAAAAABAAABABBAAAEAAAAABAAAgAAAAQAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjParent.h</FileName>
+      <HashCode>AAYQAAAAAAAAAABAAADABAAAAEAAAABBAAAgAAAAACA=</HashCode>
+      <FileName>include\DObject\DObjParent.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjUuid">
@@ -86,7 +86,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAgAAABAAQ=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjUuid.h</FileName>
+      <FileName>include\DObject\DObjUuid.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::DObjObservable">
@@ -97,7 +97,7 @@
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAABAAAAAAgAIAAAAQAQAAAAAAAAAACQAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjObserver.h</FileName>
+      <FileName>include\DObject\DObjObserver.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::DObjObservateur">
@@ -107,8 +107,8 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AACAAAQAAABAAAAAAAAAABAAACAAEgAAAAAAgACEQgA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\DObjObserver.h</FileName>
+      <HashCode>AAAAAAQAAABAAAAAAACAAAAAACAAEgBAAAAAgACEAiA=</HashCode>
+      <FileName>include\DObject\DObjObserver.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::IDObjBase" Collapsed="true">
@@ -130,8 +130,8 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AABAQABAAAgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAJCA=</HashCode>
-      <FileName>c:\cloudstation\devprojects\commun\dobject\dev\inc\dobject\idobjbase.h</FileName>
+      <HashCode>AABAQABAAAgAAgAAAAAACAAEAAAAAAAAAAAAAAAAJCA=</HashCode>
+      <FileName>include\DObject\IDObjBase.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::IDObjListe" Collapsed="true">
@@ -145,8 +145,8 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AARAAAAAAAIAAgAAAAAABAAAAAAAAAAAAAAAAAgABAA=</HashCode>
-      <FileName>C:\CloudStation\DevProjects\Commun\DObject\dev\inc\DObject\IDObjListe.h</FileName>
+      <HashCode>AARAAAAAAAIAAgAAAAAADAAEAAAAAAAAAAAAAAgABAA=</HashCode>
+      <FileName>include\DObject\IDObjListe.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

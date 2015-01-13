@@ -62,17 +62,17 @@ namespace DObject
 		std::string GetString1();
 		bool SetString1(std::string string1);
 
-		std::string GetString2();
-		bool SetString2(std::string string2);
+		//std::string GetString2();
+		//bool SetString2(std::string string2);
 
-		long GetL1() ;
-		bool SetL1(long l1);
+		//long GetL1() ;
+		//bool SetL1(long l1);
 
-		long GetL2();
-		bool SetL2(long l2);
+		//long GetL2();
+		//bool SetL2(long l2);
 
-		unsigned long GetUL3();
-		bool SetUL3(unsigned long ul3);
+		//unsigned long GetUL3();
+		//bool SetUL3(unsigned long ul3);
 
 		
 		CDObjTestListe* GetPointeurListe(bool bInit = true);
@@ -81,10 +81,10 @@ namespace DObject
 	private:
 		// Données membres
 		std::string		_string1;
-		std::string		_string2;
-		long			_l1;
-		long			_l2;
-		unsigned long	_ul3;
+		//std::string		_string2;
+		//long			_l1;
+		//long			_l2;
+		//unsigned long	_ul3;
 
 		CDObjTest*		_pointeur;
 		CDObjTestListe*	_pointeurListe;

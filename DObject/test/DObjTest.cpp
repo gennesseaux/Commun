@@ -19,6 +19,8 @@ namespace DObject
 	//! Destructeur
 	CDObjTest::~CDObjTest(void)
 	{
+		RemoveEnfants();
+
 		/* Initialisation des données. */
 		InitialiserDonnees();
 	}
@@ -102,11 +104,11 @@ namespace DObject
 		InitialiserDonnees();
 
 		/* Copie des variables membres de l'objet. */
-		_l1 = source._l1;
-		_l2 = source._l2;
-		_ul3 = source._ul3;
+		//_l1 = source._l1;
+		//_l2 = source._l2;
+		//_ul3 = source._ul3;
 		_string1 = source._string1;
-		_string2 = source._string2;
+		//_string2 = source._string2;
 
 		/* Copie des pointeurs membres de l'objet. */
 		if (source._pointeur)
@@ -118,11 +120,11 @@ namespace DObject
 
 	void CDObjTest::InitialiserDonnees()
 	{
-		_l1 = DefLong;
-		_l2 = DefLong;
-		_ul3 = DefULong;
+		//_l1 = DefLong;
+		//_l2 = DefLong;
+		//_ul3 = DefULong;
 		_string1 = std::string("");
-		_string2 = std::string("");
+		//_string2 = std::string("");
 
 		delete _pointeur; _pointeur = nullptr;
 		delete _pointeurListe; _pointeurListe = nullptr;
@@ -222,86 +224,86 @@ namespace DObject
 		return true;
 	}
 
-	long CDObjTest::GetL1()
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return DefLong;
+	//long CDObjTest::GetL1()
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return DefLong;
 
-		return _l1;
-	}
+	//	return _l1;
+	//}
 
-	bool CDObjTest::SetL1(long l1)
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return false;
+	//bool CDObjTest::SetL1(long l1)
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return false;
 
-		// Le champ est modifié uniquement si sa valeur change.
-		if (_l1 != l1)
-		{
-			// Affectation de la nouvelle valeur.
-			_l1 = l1;
+	//	// Le champ est modifié uniquement si sa valeur change.
+	//	if (_l1 != l1)
+	//	{
+	//		// Affectation de la nouvelle valeur.
+	//		_l1 = l1;
 
-			// Marquer l'objet comme modifié.
-			SetModifier();
-		}
+	//		// Marquer l'objet comme modifié.
+	//		SetModifier();
+	//	}
 
-		// Le changement de valeur a réussi.
-		return true;
-	}
+	//	// Le changement de valeur a réussi.
+	//	return true;
+	//}
 
-	long CDObjTest::GetL2()
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return DefLong;
+	//long CDObjTest::GetL2()
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return DefLong;
 
-		return _l2;
-	}
+	//	return _l2;
+	//}
 
-	bool CDObjTest::SetL2(long l2)
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return false;
+	//bool CDObjTest::SetL2(long l2)
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return false;
 
-		// Le champ est modifié uniquement si sa valeur change.
-		if (_l2 != l2)
-		{
-			// Affectation de la nouvelle valeur.
-			_l2 = l2;
+	//	// Le champ est modifié uniquement si sa valeur change.
+	//	if (_l2 != l2)
+	//	{
+	//		// Affectation de la nouvelle valeur.
+	//		_l2 = l2;
 
-			// Marquer l'objet comme modifié.
-			SetModifier();
-		}
+	//		// Marquer l'objet comme modifié.
+	//		SetModifier();
+	//	}
 
-		// Le changement de valeur a réussi.
-		return true;
-	}
+	//	// Le changement de valeur a réussi.
+	//	return true;
+	//}
 
-	unsigned long CDObjTest::GetUL3()
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return DefLong;
+	//unsigned long CDObjTest::GetUL3()
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return DefLong;
 
-		return _ul3;
-	}
+	//	return _ul3;
+	//}
 
-	bool CDObjTest::SetUL3(unsigned long ul3)
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return false;
+	//bool CDObjTest::SetUL3(unsigned long ul3)
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return false;
 
-		// Le champ est modifié uniquement si sa valeur change.
-		if (_ul3 != ul3)
-		{
-			// Affectation de la nouvelle valeur.
-			_ul3 = ul3;
+	//	// Le champ est modifié uniquement si sa valeur change.
+	//	if (_ul3 != ul3)
+	//	{
+	//		// Affectation de la nouvelle valeur.
+	//		_ul3 = ul3;
 
-			// Marquer l'objet comme modifié.
-			SetModifier();
-		}
+	//		// Marquer l'objet comme modifié.
+	//		SetModifier();
+	//	}
 
-		// Le changement de valeur a réussi.
-		return true;
-	}
+	//	// Le changement de valeur a réussi.
+	//	return true;
+	//}
 
 	bool CDObjTest::SetString1(std::string string1)
 	{
@@ -330,32 +332,32 @@ namespace DObject
 		return _string1;
 	}
 
-	bool CDObjTest::SetString2(std::string string2)
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return false;
+	//bool CDObjTest::SetString2(std::string string2)
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return false;
 
-		// Le champ est modifié uniquement si sa valeur change.
-		if (_string2 != string2)
-		{
-			// Affectation de la nouvelle valeur.
-			_string2 = string2;
+	//	// Le champ est modifié uniquement si sa valeur change.
+	//	if (_string2 != string2)
+	//	{
+	//		// Affectation de la nouvelle valeur.
+	//		_string2 = string2;
 
-			// Marquer l'objet comme modifié.
-			SetModifier();
-		}
+	//		// Marquer l'objet comme modifié.
+	//		SetModifier();
+	//	}
 
-		// Le changement de valeur a réussi.
-		return true;
-	}
+	//	// Le changement de valeur a réussi.
+	//	return true;
+	//}
 
-	std::string CDObjTest::GetString2()
-	{
-		// L'objet doit être initialisé
-		if (!Initialiser()) return std::string("");
+	//std::string CDObjTest::GetString2()
+	//{
+	//	// L'objet doit être initialisé
+	//	if (!Initialiser()) return std::string("");
 
-		return _string2;
-	}
+	//	return _string2;
+	//}
 
 	CDObjTestListe* CDObjTest::GetPointeurListe(bool bInit)
 	{

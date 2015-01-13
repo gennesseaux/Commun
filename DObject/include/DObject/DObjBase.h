@@ -115,6 +115,9 @@ namespace DObject
 		void RemoveParent(CDObjEtat* pObjEtat);
 		//! Retourne le parent de type CDObjBase* ou CDObjBaseListe*
 		template<class T> T GetParent();
+		//! Retire tous les enfants
+		void RemoveEnfants();
+
 	protected:
 		//!
 		void AddEnfant(CDObjEtat* pObjEtat);

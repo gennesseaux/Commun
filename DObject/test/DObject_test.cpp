@@ -101,7 +101,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("test2");
@@ -177,7 +177,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete gp;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 
@@ -197,7 +197,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Tester la suppression d'un obj qui est dans plusieurs listes
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");		//t1->SetAcquis(true);
 
@@ -218,7 +218,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Tester la sauvegarde d'un obj qui est dans plusieurs listes
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("test1");
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("test2");
@@ -249,7 +249,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete pListe2;
 	}
 
-	if(1)
+	if(0)
 	{
 		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
 
@@ -265,7 +265,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete pListe1;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("(t2) Enfant 1");	t2->SetAcquis(true);
@@ -276,7 +276,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete t2;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
 		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
@@ -287,7 +287,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete pListe1;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1 Parent");
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Enfant");		t1->SetAcquis(true);
@@ -298,7 +298,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete t1;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("(t1) Parent");		t1->SetAcquis(true);
 		CDObjTest* t2 = new CDObjTest(2);	t2->SetString1("(t2) Enfant 1");	t2->SetAcquis(true);
@@ -354,7 +354,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		delete pListe1;
 	}
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* t1 = new CDObjTest(1);	t1->SetString1("Parent");		t1->SetAcquis(true);
 		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
@@ -366,7 +366,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 
-	if (1)
+	if (0)
 	{
 		CDObjTest* gp = new CDObjTest(99);	gp->SetString1("Grand père");	gp->SetAcquis(true);
 		CDObjTestListe* pListe = new CDObjTestListe("Liste");
@@ -383,6 +383,84 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		delete gp;
 		delete pListe;
+	}
+
+	if (0)
+	{
+		CDObjTest* parent = new CDObjTest(1);	parent->SetString1("Parent");
+		CDObjTest* enfant = new CDObjTest(2);	enfant->SetString1("Enfant");
+
+		parent->GetPointeurListe()->Add(enfant);
+		enfant->AddParent(parent);
+
+
+		//delete enfant;
+		delete parent;
+
+		int toto=0;
+	}
+
+	if (1)
+	{
+		CDObjTest* parent = new CDObjTest(1);	parent->SetString1("Parent");
+		CDObjTest* enfant1 = new CDObjTest(2);	enfant1->SetString1("Enfant 1");
+		CDObjTest* enfant2 = new CDObjTest(2);	enfant2->SetString1("Enfant 2");
+		CDObjTestListe* pListe1 = new CDObjTestListe("Liste 1");
+		CDObjTestListe* pListe2 = new CDObjTestListe("Liste 2");
+
+		// Cas 1
+		enfant1->AddParent(parent);
+		enfant1->SetPourSupprimer(true);
+		enfant1->Supprimer();
+		delete enfant1;
+		enfant1 = nullptr;
+
+		// Cas 2
+		pListe1->Add(enfant2);
+		pListe1->AddParent(parent);
+		pListe1->SetPourSupprimer(true);
+		pListe1->Supprimer();
+		delete pListe1;
+		pListe1 = nullptr;
+		enfant2 = nullptr;
+
+		// Cas 3
+		enfant1 = new CDObjTest(2);	enfant1->SetString1("Enfant 1");
+		pListe1 = new CDObjTestListe("Liste Parent");
+
+		enfant1->AddParent(pListe1);
+		enfant1->SetPourSupprimer(true);
+		enfant1->Supprimer();
+		delete enfant1;
+		enfant1 = nullptr;
+
+		// Cas 4
+		delete pListe1; pListe1 = new CDObjTestListe("Parent");
+		delete pListe2; pListe2 = new CDObjTestListe("Enfant");
+
+		pListe2->AddParent(pListe1);
+		pListe2->SetPourSupprimer(true);
+		pListe2->Supprimer();
+		delete pListe2;
+		pListe2 = nullptr;
+
+		// Cas 5
+		delete parent; parent = new CDObjTest(1);	parent->SetString1("Parent");
+		delete pListe1; pListe1 = new CDObjTestListe("Liste Parent");
+		delete enfant1; enfant1 = new CDObjTest(2);	enfant1->SetString1("Enfant 1");
+
+		enfant1->AddParent(parent);
+		enfant1->AddParent(pListe1);
+		enfant1->SetPourSupprimer(true);
+		enfant1->Supprimer();
+		delete enfant1;
+		enfant1 = nullptr;
+
+		delete parent; parent = nullptr;
+		delete enfant1; enfant1 = nullptr;
+		delete enfant2; enfant2 = nullptr;
+		delete pListe1; pListe1 = nullptr;
+		delete pListe2; pListe2 = nullptr;
 	}
 
 

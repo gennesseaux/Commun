@@ -27,38 +27,8 @@ namespace DObject
 		// Désactive la destruction automatisue depuis les listes
 		m_bAutoDeleteFromList = false;
 
-		while(m_mObjBaseEnfant.size())
-		{
-			IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
-			pIObjBase->RemoveParent(this);
-		}
-
-		while(m_mObjListeEnfant.size())
-		{
-			IDObjListe* pIObjListe = m_mObjListeEnfant[0];
-			pIObjListe->RemoveParent(this);
-		}
-
-		// 
-		while (GetParent<IDObjListe*>())
-		{
-			IDObjListe* pObjListe = GetParent<IDObjListe*>();
-
-			// Enlève l'objet de la liste
-			pObjListe->Remove(this);
-
-			// Enlève le parent
-			RemoveParent(pObjListe);
-		}
-
-		// 
-		while (GetParent<IDObjBase*>())
-		{
-			IDObjBase* pIObjBase = GetParent<IDObjBase*>();
-
-			// Enlève le parent
-			RemoveParent(pIObjBase);
-		}
+		// retire tous les enfants
+		RemoveEnfants();
 
 		// Libération mémoire
 		delete m_pParent; m_pParent = nullptr;
@@ -284,6 +254,42 @@ namespace DObject
 
 		if (m_pParent->GetCount()==0)
 			this->RemoveObservateur(m_pParent);
+	}
+	
+	void CDObjBase::RemoveEnfants()
+	{
+		while(m_mObjBaseEnfant.size())
+		{
+			IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
+			pIObjBase->RemoveParent(this);
+		}
+
+		while(m_mObjListeEnfant.size())
+		{
+			IDObjListe* pIObjListe = m_mObjListeEnfant[0];
+			pIObjListe->RemoveParent(this);
+		}
+
+		// 
+		while (GetParent<IDObjListe*>())
+		{
+			IDObjListe* pObjListe = GetParent<IDObjListe*>();
+
+			// Enlève l'objet de la liste
+			pObjListe->Remove(this);
+
+			// Enlève le parent
+			RemoveParent(pObjListe);
+		}
+
+		// 
+		while (GetParent<IDObjBase*>())
+		{
+			IDObjBase* pIObjBase = GetParent<IDObjBase*>();
+
+			// Enlève le parent
+			RemoveParent(pIObjBase);
+		}
 	}
 
 	void CDObjBase::AddEnfant(CDObjEtat* pObjEtat)

@@ -106,7 +106,9 @@ namespace DObject
 	// Surcharges de CDObjEtat
 	public:
 		//! Indique si l'objet est marqué pour suppression.
-		void SetPourSupprimer(bool bPourSupprimer = true, bool bPropagerAuxEnfants = false);
+		virtual void SetPourSupprimer(bool bPourSupprimer = true, bool bPropagerAuxEnfants = false) final;
+		//! Indique si l'objet à été supprimé
+		virtual void SetSupprimer(bool bSupprimer = true) final;
 
 		//! Indique si l'objet peut être initialisé
 		virtual bool PeutEtreInitialiser() final;
@@ -130,6 +132,9 @@ namespace DObject
 		void RemoveParent(CDObjEtat* pObjEtat);
 		//! Retourne le parent de type CDObjBase* ou CDObjBaseListe*
 		template<class T> T GetParent();
+		//! Retire tous les enfants
+		void RemoveEnfants();
+
 	protected:
 		//!
 		void AddEnfant(CDObjEtat* pObjEtat);

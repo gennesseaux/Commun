@@ -21,37 +21,10 @@
 template<class TypeClass>
 DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 {
-	while(m_mObjBaseEnfant.size())
-	{
-		IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
-		pIObjBase->RemoveParent(this);
-	}
+	// Retire tous les enfants
+	RemoveEnfants();
 
-	while(m_mObjListeEnfant.size())
-	{
-		IDObjListe* pIObjListe = m_mObjListeEnfant[0];
-		pIObjListe->RemoveParent(this);
-	}
-
-	// 
-	while (GetParent<IDObjBase*>())
-	{
-		IDObjBase* pIObjBase = GetParent<IDObjBase*>();
-
-		// Enlève le parent
-		RemoveParent(pIObjBase);
-	}
-
-	// 
-	while (GetParent<IDObjListe*>())
-	{
-		IDObjListe* pObjListe = GetParent<IDObjListe*>();
-
-		// Enlève le parent
-		RemoveParent(pObjListe);
-	}
-
-	//
+	// Retire tous les éléments de la liste
 	RemoveAll();
 
 	// Libération mémoire
@@ -379,22 +352,34 @@ size_t DObject::CDObjListe<TypeClass>::GetSize()
 template<class TypeClass>
 void DObject::CDObjListe<TypeClass>::UpdateValideSuppression(CDObjBase* pObjBase)
 {
-	// Incrémentation des compteurs
+	// 
 	bool bPourSupprimer = pObjBase->EstPourSupprimer();
-	m_iCountValide += bPourSupprimer ? -1 : 1;
-	m_iCountPourSupprimer += bPourSupprimer ? 1 : -1;
 
 	//
 	LPGUID lpuuid = pObjBase->GetLPGUID();
-	if (bPourSupprimer)
+	if(bPourSupprimer)
 	{
-		m_valide.erase(std::find(m_valide.begin(), m_valide.end(), lpuuid));
-		m_pourSupprimer.emplace_back(lpuuid);
+		auto it = std::find(m_valide.begin(), m_valide.end(), lpuuid);
+		if (it != m_valide.end())	
+		{
+			m_valide.erase(it);
+			m_pourSupprimer.emplace_back(lpuuid);
+
+			m_iCountValide -= 1;
+			m_iCountPourSupprimer += 1;
+		}
 	}
 	else
 	{
-		m_pourSupprimer.erase(std::find(m_pourSupprimer.begin(), m_pourSupprimer.end(), lpuuid));
-		m_valide.emplace_back(lpuuid);
+		auto it = std::find(m_pourSupprimer.begin(), m_pourSupprimer.end(), lpuuid);
+		if (it != m_pourSupprimer.end())	
+		{
+			m_pourSupprimer.erase(it);
+			m_valide.emplace_back(lpuuid);
+
+			m_iCountValide += 1;
+			m_iCountPourSupprimer -= 1;
+		}
 	}
 
 	assert(m_iCountValide == m_valide.size());
@@ -437,6 +422,17 @@ void DObject::CDObjListe<TypeClass>::SetPourSupprimer(bool bPourSupprimer, bool 
 		for (auto & pObj : m_liste)
 			pObj->SetPourSupprimer(bPourSupprimer);
 	}
+}
+
+//! Indique si l'objet à été supprimé.
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetSupprimer(bool bSupprimer)
+{
+	CDObjEtat::SetSupprimer(bSupprimer);
+
+	// Notification
+	if (bSupprimer)
+		NotifierObservateur(NotificationEnfant::EnfantSupprimer);
 }
 
 //! Indique si l'objet peut être initialisé
@@ -486,6 +482,7 @@ bool DObject::CDObjListe<TypeClass>::DoitEtreSupprimer()
 	return (m_liste.size() && EstPourSupprimer() && EstModifier() && !EstSupprimer());
 }
 
+//! Ajout d'un parent de type CDObjEtat*
 template<class TypeClass /*= CDObjBase*/>
 void DObject::CDObjListe<TypeClass>::AddParent(CDObjEtat* pObjEtat)
 {
@@ -509,6 +506,7 @@ void DObject::CDObjListe<TypeClass>::AddParent(CDObjEtat* pObjEtat)
 	this->RegisterObservateur(m_pParent);
 }
 
+//! Retire un parent de type CDObjEtat*
 template<class TypeClass /*= CDObjBase*/>
 void DObject::CDObjListe<TypeClass>::RemoveParent(CDObjEtat* pObjEtat)
 {
@@ -531,6 +529,41 @@ void DObject::CDObjListe<TypeClass>::RemoveParent(CDObjEtat* pObjEtat)
 
 	if (m_pParent->GetCount()==0)
 		this->RemoveObservateur(m_pParent);
+}
+
+//! Retire tous les enfants
+template<class TypeClass /*= CDObjBase*/>
+void DObject::CDObjListe<TypeClass>::RemoveEnfants()
+{
+	while(m_mObjBaseEnfant.size())
+	{
+		IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
+		pIObjBase->RemoveParent(this);
+	}
+
+	while(m_mObjListeEnfant.size())
+	{
+		IDObjListe* pIObjListe = m_mObjListeEnfant[0];
+		pIObjListe->RemoveParent(this);
+	}
+
+	// 
+	while (GetParent<IDObjBase*>())
+	{
+		IDObjBase* pIObjBase = GetParent<IDObjBase*>();
+
+		// Enlève le parent
+		RemoveParent(pIObjBase);
+	}
+
+	// 
+	while (GetParent<IDObjListe*>())
+	{
+		IDObjListe* pObjListe = GetParent<IDObjListe*>();
+
+		// Enlève le parent
+		RemoveParent(pObjListe);
+	}
 }
 
 template<class TypeClass /*= CDObjBase*/>

@@ -109,29 +109,29 @@ void DObject::CDObjParent::OnObjEnfantSupprimer(const DObjObservable* observable
 		while (m_mObjBaseParent.size())
 		{
 			IDObjBase* pObjBase = m_mObjBaseParent[0];
-			pObjBase->RemoveParent(pIObjBase);
+			pIObjBase->RemoveParent(pObjBase);
 		}
 		while (m_mObjListeParent.size())
 		{
 			IDObjListe* pObjBaseListe = m_mObjListeParent[0];
-			pObjBaseListe->RemoveParent(pIObjBase);
+			pIObjBase->RemoveParent(pObjBaseListe);
 			pObjBaseListe->Remove(pIObjBase);
 		}
 		return;
 	}
 
-	IDObjListe* pObjBaseListe = dynamic_cast<IDObjListe*>((DObjObservable*)observable);
-	if (pObjBaseListe)
+	IDObjListe* pIObjBaseListe = dynamic_cast<IDObjListe*>((DObjObservable*)observable);
+	if (pIObjBaseListe)
 	{
 		while (m_mObjBaseParent.size())
 		{
 			IDObjBase* pObjBase = m_mObjBaseParent[0];
-			pObjBase->RemoveParent(pObjBaseListe);
+			pIObjBaseListe->RemoveParent(pObjBase);
 		}
 		while (m_mObjListeParent.size())
 		{
 			IDObjListe* pObjBaseListe = m_mObjListeParent[0];
-			pObjBaseListe->RemoveParent(pObjBaseListe);
+			pIObjBaseListe->RemoveParent(pObjBaseListe);
 		}
 		return;
 	}
