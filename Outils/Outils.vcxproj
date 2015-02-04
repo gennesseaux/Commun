@@ -14,6 +14,7 @@
     <ClInclude Include="include\Outils\NotificationClientRegistry.h" />
     <ClInclude Include="include\Outils\SafeSingletonHolder.h" />
     <ClInclude Include="include\Outils\static_check.h" />
+    <ClInclude Include="include\Outils\StringTools.h" />
     <ClInclude Include="include\Outils\TypeManip.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
