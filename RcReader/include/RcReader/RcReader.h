@@ -16,6 +16,7 @@
 
 // Inclusions
 #include "RcReader/RcResourceDialog.h"
+#include "RcReader/RcResourceControl.h"
 
 
 namespace RcReader
@@ -39,6 +40,10 @@ namespace RcReader
 
 	protected:
 		void parse();
+
+	public:
+		int GetDialogCount() { return m_lstDialog.size(); }
+		CRcResourceDialog* GetDialog(int iIndex) { return m_lstDialog[iIndex]; }
 
 	protected:
 		std::string m_sFichierRc;

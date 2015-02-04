@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{860310a9-300b-45c3-baa8-35d77fdcad07}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{66291637-620c-430e-8ea4-b9d7ae4d047b}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\RcReader\RcReader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RcReader\RcResourceDialog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RcReader\RcResourceControl.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RcReader\RcControlType.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\RcReader\RcReader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RcReader\RcResourceDialog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RcReader\RcResourceControl.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RcReader\RcControlType.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
