@@ -3,9 +3,15 @@
 #pragma once
 
 
-// Inculions
+// Inculions STL
 #include <algorithm>
 #include <string>
+
+// Inculions Poco
+#include <Poco/Foundation.h>
+#include <Poco/Format.h>
+#include <Poco/String.h>
+
 
 namespace StringTools
 {
@@ -31,6 +37,18 @@ namespace StringTools
 	inline std::string& remove_from_end(std::string& str, const std::string& toRemove)
 	{
 		return Poco::replaceInPlace<std::string>(str, toRemove, "", str.length() - toRemove.length());
+	}
+
+	//
+	inline std::string toUpper(std::string& str)
+	{
+		return Poco::toUpper(str);
+	}
+
+	//
+	inline std::string toLower(std::string& str)
+	{
+		return Poco::toLower(str);
 	}
 
 }

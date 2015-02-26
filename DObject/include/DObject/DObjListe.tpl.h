@@ -31,6 +31,7 @@ DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 	delete m_pParent; m_pParent = nullptr;
 }
 
+
 //! Verification
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::Verifier(std::string* sMsg = NULL)
