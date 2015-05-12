@@ -245,6 +245,24 @@ Column Statement::getColumn(const int aIndex)
     return Column(mStmtPtr, aIndex);
 }
 
+// Return a copy of the column data specified by its name
+// (use the Column copy-constructor)
+Column Statement::getColumn(const char* colName)
+{
+    if (false == mbOk)
+    {
+        throw SQLite::Exception("No row to get a column from");
+    }
+
+	for(int aIndex=0; aIndex<mColumnCount; aIndex++)
+	{
+		if(strcmp(sqlite3_column_name(mStmtPtr,aIndex),colName)==0)
+			return Column(mStmtPtr,aIndex);
+	}
+
+	throw SQLite::Exception("Column not found");
+}
+
 // Test if the column is NULL
 bool Statement::isColumnNull(const int aIndex) const
 {

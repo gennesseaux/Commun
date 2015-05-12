@@ -291,6 +291,15 @@ public:
     Column  getColumn(const int aIndex);
 
     /**
+     * @brief Return a copie of the column data specified by its name
+     *
+     * @param[in] colName    Name of the column
+     *
+     * @return true if the column value is NULL
+     */
+	Column  getColumn(const char* colName);
+
+    /**
      * @brief Test if the column value is NULL
      *
      * @param[in] aIndex    Index of the column, starting at 0

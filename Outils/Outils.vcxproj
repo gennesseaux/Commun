@@ -14,8 +14,11 @@
     <ClInclude Include="include\Outils\NotificationClientRegistry.h" />
     <ClInclude Include="include\Outils\SafeSingletonHolder.h" />
     <ClInclude Include="include\Outils\static_check.h" />
+    <ClInclude Include="include\Outils\Stream.h" />
+    <ClInclude Include="include\Outils\StreamSupport.h" />
     <ClInclude Include="include\Outils\StringTools.h" />
     <ClInclude Include="include\Outils\TypeManip.h" />
+    <ClInclude Include="include\Outils\VariantStream.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{407D9119-86DD-4CE1-8E3D-37A00BCD3849}</ProjectGuid>
