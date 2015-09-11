@@ -13,7 +13,6 @@
 
 // Inclusions
 #include "DObject/DObjListe.h"
-#include "DObject/DObjParent.h"
 
 
 
@@ -21,14 +20,15 @@
 template<class TypeClass>
 DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 {
-	// Retire tous les enfants
-	RemoveEnfants();
-
 	// Retire tous les éléments de la liste
 	RemoveAll();
+}
 
-	// Libération mémoire
-	delete m_pParent; m_pParent = nullptr;
+//! Pointeur vers CDObject
+template<class TypeClass /*= CDObjBase*/>
+DObject::CDObject* DObject::CDObjListe<TypeClass>::GetDObject()
+{
+	return (CDObject*)this;
 }
 
 
@@ -36,7 +36,7 @@ DObject::CDObjListe<TypeClass>::~CDObjListe(void)
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::Verifier(std::string* sMsg = NULL)
 {
-	for (auto & pObj : m_liste)
+	for(auto& pObj : m_liste)
 	{
 		//
 		if (pObj->EstPourSupprimer() == false && !pObj->Verifier(sMsg))
@@ -49,35 +49,16 @@ bool DObject::CDObjListe<TypeClass>::Verifier(std::string* sMsg = NULL)
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::Sauver()
 {
-	if (DoitEtreSauver() == false) return true;
-	if (PeutEtreSauver() == false) return false;
-
-	// Mémorisation de l'etat de la liste avant sauvegarde
-	CDObjState		state(this);
-
 	// Sauvegarde chaque objets de la liste
-	size_t iCount = m_liste.size();
-	size_t i = 0;
-	while (i < iCount)
+	for (size_t i = 0; i < m_liste.size() ; i++)
 	{
 		auto pObj = m_liste[i];
 
 		if (pObj->EstPourSupprimer() == false && !pObj->Sauver())
-		{
-			state.Restore(); return false;
-		}
-
-		if (pObj->EstPourSupprimer() == true)
-		{
-			--i; --iCount;
-		}
-
+			return false;
+		
 		if (pObj->EstPourSupprimer() == true && !pObj->Supprimer())
-		{
-			state.Restore(); return false;
-		}
-
-		++i;
+			return false;
 	}
 
 	return true;
@@ -87,32 +68,17 @@ bool DObject::CDObjListe<TypeClass>::Sauver()
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::Supprimer()
 {
-	if (DoitEtreSupprimer() == false) return true;
-	if (PeutEtreSupprimer() == false) return false;
-
-	// Mémorisation de l'etat de la liste avant sauvegarde
-	CDObjState		state(this);
-
 	// Marque les objets pour suppression 
 	// et supprime chaque objets de la liste
-	size_t iCount = m_liste.size();
-	while (iCount > 0)
+	for(unsigned i=m_liste.size(); i-->0;)
 	{
-		auto pObj = m_liste[0];
-
+		auto pObj = m_liste[i];
 		if (!pObj->Supprimer())
-		{
-			state.Restore(); return false;
-		}
-
-		--iCount;
+			return false;
 	}
 
 	return true;
 }
-
-
-
 
 //! Ajout dans la liste
 template<class TypeClass>
@@ -122,8 +88,8 @@ size_t DObject::CDObjListe<TypeClass>::Add(TypeClass* pObj)
 	CDObjBase* pObjBase = static_cast<CDObjBase*>(pObj);
 
 	// Ajout de l'objet à la liste
-	CDObjBase* pObjListe = GetFromUUID(pObjBase->GetLPGUID());
-	if (pObjListe == nullptr)
+	CDObjBase* pObjBaseInListe = GetFromUUID(pObjBase->GetLPGUID());
+	if (pObjBaseInListe == nullptr)
 		m_liste.emplace_back(pObj);
 	// L'objet ne peut être ajouté plus d'une fois à la liste
 	else
@@ -133,7 +99,7 @@ size_t DObject::CDObjListe<TypeClass>::Add(TypeClass* pObj)
 	SetModifier(true);
 
 	// La liste devient parent de l'objet
-	pObjBase->AddParent(this);
+	pObjBase->AddOwner(this);
 
 	// Incrémentation des compteurs
 	bool bPourSupprimer = pObjBase->EstPourSupprimer();
@@ -205,62 +171,64 @@ void DObject::CDObjListe<TypeClass>::Copy(const CDObjListe& source)
 
 //! Suppression d'un objet dans la liste.
 template<class TypeClass>
-void DObject::CDObjListe<TypeClass>::RemoveAt(size_t nIndex)
+TypeClass* DObject::CDObjListe<TypeClass>::RemoveAt(size_t nIndex)
 {
 	// Récupère l'objet de base
-	CDObjBase* pObjBase = m_liste[nIndex];
+	CDObjBase* pDObjBase = m_liste[nIndex];
 
-	// Suppression de la liste
+	// Suppression de l'objet dans la liste
 	m_liste.erase(m_liste.begin() + nIndex);
 
-	// décrémentation des compteurs
-	bool bPourSupprimer = pObjBase->EstPourSupprimer();
-	m_iCountValide -= static_cast<int>(!bPourSupprimer);
-	m_iCountPourSupprimer -= static_cast<int>(bPourSupprimer);
-
 	//
-	LPGUID lpuuid = pObjBase->GetLPGUID();
+	LPGUID lpuuid = pDObjBase->GetLPGUID();
 	auto its = std::find_if(m_pourSupprimer.begin(), m_pourSupprimer.end(), [=](LPGUID puuid){ return puuid == lpuuid; });
 	if (its != m_pourSupprimer.end()) m_pourSupprimer.erase(its);
 	auto itv = std::find_if(m_valide.begin(), m_valide.end(), [=](LPGUID puuid){ return puuid == lpuuid; });
 	if (itv != m_valide.end()) m_valide.erase(itv);
 
-	//
-	pObjBase->RemoveParent(this);
+	// Mise à jour des compteurs
+	m_iCountValide = m_valide.size();
+	m_iCountPourSupprimer = m_pourSupprimer.size();
 
-	// Delete de l'objet si il n'est plus observer
-	if (pObjBase->GetObservateurCount() == 0 && pObjBase->m_bAutoDeleteFromList)
-		pObjBase->Delete();
+	//
+	pDObjBase->RemoveOwner(this);
 
 	// L'objet est supprimé par conséquent la liste est modifiée
 	SetModifier(true);
+
+	// Delete de l'objet si il n'est plus observer
+	if (pDObjBase->GetOwnerCount()==0 && pDObjBase->m_bAutoDeleteFromList)
+		return dynamic_cast<TypeClass*>(pDObjBase->Delete());
+
+	return dynamic_cast<TypeClass*>(pDObjBase);
 }
 
 //! Suppression d'un objet dans la liste.
 template<class TypeClass>
-void DObject::CDObjListe<TypeClass>::Remove(IDObjBase* pIObjBase)
+TypeClass* DObject::CDObjListe<TypeClass>::Remove(TypeClass* pObj)
 {
-	LPGUID lpuuid = pIObjBase->GetLPGUID();
+	LPGUID lpuuid = pObj->GetLPGUID();
 	auto it = std::find_if(m_liste.begin(), m_liste.end(), [=](CDObjBase* pObj){ return lpuuid == pObj->GetLPGUID(); });
 	if (it != m_liste.end())
 	{
 		size_t i = it - m_liste.begin();
-		RemoveAt(i);
+		return RemoveAt(i);
 	}
+	return pObj;
 }
 
 //! Suppression d'un objet dans la liste.
 template<class TypeClass>
-void DObject::CDObjListe<TypeClass>::RemoveFromId(unsigned long ulId)
+TypeClass* DObject::CDObjListe<TypeClass>::RemoveFromId(unsigned long ulId)
 {
-	Remove(GetFromId(ulId));
+	return Remove(GetFromId(ulId));
 }
 
 //! Suppression d'un objet dans la liste.
 template<class TypeClass>
-void DObject::CDObjListe<TypeClass>::RemoveFromUUID(LPGUID uuid)
+TypeClass* DObject::CDObjListe<TypeClass>::RemoveFromUUID(LPGUID uuid)
 {
-	Remove(GetFromUUID(uuid));
+	return Remove(GetFromUUID(uuid));
 }
 
 //! Suppression de tous les objets de la liste.
@@ -340,6 +308,7 @@ size_t DObject::CDObjListe<TypeClass>::GetCount(ObjEtat etat)
 	case DObject::ObjEtat::Valide:				return m_iCountValide;			break;
 	case DObject::ObjEtat::PourSupprimer:		return m_iCountPourSupprimer;	break;
 	}
+	return 0;
 }
 
 //! Nombre d'objet dans la liste
@@ -347,6 +316,51 @@ template<class TypeClass>
 size_t DObject::CDObjListe<TypeClass>::GetSize()
 {
 	return m_liste.size();
+}
+
+//! Suppression d'un enfant
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::RemoveChild(CDObject* pChild)
+{
+	CDObject::RemoveChild(pChild);
+
+	this->Remove((TypeClass*)pChild);
+}
+
+
+//! Mise à jour des items valides ou pour suppression
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::OnEvent(DObjEvent& event, CDObject* sender)
+{
+	switch(event)
+	{
+		case DObjEvent::ObjetModifierEvent:
+		{
+			SetEnfantsModifier(true);
+
+			this->OnModifier(sender,this);
+		} break;
+
+		case DObjEvent::ObjetSauverEvent:
+		{
+			this->OnSauver(sender,this);
+		} break;
+
+		case DObjEvent::ObjetPourSupprimerEvent:
+		{
+			SetEnfantsModifier(true);
+
+			UpdateValideSuppression((CDObjBase*)sender);
+
+			this->OnModifier(sender,this);
+		} break;
+
+		case DObjEvent::ObjetSupprimerEvent:
+		{
+			// DObjSaveGuard se charge des suppressions de pointeurs
+			this->OnSupprimer(sender,this);
+		} break;
+	}
 }
 
 //! Mise à jour des items valides ou pour suppression
@@ -412,63 +426,161 @@ void DObject::CDObjListe<TypeClass>::SortByPourSupprimer()
 	std::sort(m_liste.begin(), m_liste.end(), CDObjBase::ComparePourSupprimerPredicate);
 }
 
-//! Indique si l'objet est marqué pour suppression.
+// Indique si l'objet est initialisé
 template<class TypeClass>
-void DObject::CDObjListe<TypeClass>::SetPourSupprimer(bool bPourSupprimer, bool bPropagerAuxEnfants)
+bool DObject::CDObjListe<TypeClass>::EstInitialiser() const
 {
-	CDObjEtat::SetPourSupprimer(bPourSupprimer);
+	return CDObjState::EstInitialiser();
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetInitaliser(bool bInitaliser)
+{
+	CDObjState::SetInitaliser(bInitaliser);
+}
 
-	if (bPropagerAuxEnfants)
+// Indique si l'objet à été modifié
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::EstModifier() const
+{
+	return CDObjState::EstModifier();
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetModifier(bool bModifier)
+{
+	bool bNotifer = (CDObjState::EstModifier() != bModifier);
+
+	CDObjState::SetModifier(bModifier);
+
+	// Notification
+	if(bModifier && bNotifer)
+		notifyClient(DObjEvent::ObjetModifierEvent);
+}
+
+// Indique si l'item à des objets membre modifiés
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::SontEnfantsModifier() const
+{
+	return CDObjState::SontEnfantsModifier();
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetEnfantsModifier(bool bEnfantModifier)
+{
+	CDObjState::SetEnfantsModifier(bEnfantModifier);
+}
+
+// Indique si l'objet est marqué pour suppression
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::EstPourSupprimer() const
+{
+	return CDObjState::EstPourSupprimer();
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetPourSupprimer(bool bPourSupprimer)
+{
+	bool bNotifer = (CDObjState::EstPourSupprimer() != bPourSupprimer);
+
+	CDObjState::SetPourSupprimer(bPourSupprimer);
+
+	// Notification
+	if(bNotifer)
+		notifyClient(DObjEvent::ObjetPourSupprimerEvent);
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetPourSupprimer(bool bPourSupprimer, bool bCascadeChild)
+{
+	return SetPourSupprimer(bPourSupprimer,bCascadeChild,false);
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetPourSupprimer(bool bPourSupprimer, bool bCascadeChild, bool bChildOnly)
+{
+	if(!bChildOnly)
+		SetPourSupprimer(bPourSupprimer);
+
+	if (bCascadeChild)
 	{
-		for (auto & pObj : m_liste)
-			pObj->SetPourSupprimer(bPourSupprimer);
+		for(auto pDObject : m_liste)
+			pDObject->SetPourSupprimer(bPourSupprimer);
+
+		for(auto pDObject : GetChilds())
+		{
+			CDObjBase* pDObjBase = dynamic_cast<CDObjBase*>(pDObject);
+			if(pDObjBase) pDObjBase->SetPourSupprimer(bPourSupprimer);
+			CDObjListe<TypeClass>* pDObjListe = dynamic_cast<CDObjListe<TypeClass>*>(pDObject);
+			if(pDObjListe) pDObjListe->SetPourSupprimer(bPourSupprimer,bCascadeChild);
+		}
 	}
 }
 
-//! Indique si l'objet à été supprimé.
+// Indique si l'objet à été acquis
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::EstAcquis() const
+{
+	return CDObjState::EstAcquis();
+}
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetAcquis(bool bAcquis)
+{
+	CDObjState::SetAcquis(bAcquis);
+}
+
+// Indique si l'objet à été acquis
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::EstSupprimer() const
+{
+	return CDObjState::EstSupprimer();
+}
 template<class TypeClass>
 void DObject::CDObjListe<TypeClass>::SetSupprimer(bool bSupprimer)
 {
-	CDObjEtat::SetSupprimer(bSupprimer);
+	CDObjState::SetSupprimer(bSupprimer);
+}
 
-	// Notification
-	if (bSupprimer)
-		NotifierObservateur(NotificationEnfant::EnfantSupprimer);
+// Indique si l'objet est un nouvel objet : c'est à dire en cours de création
+template<class TypeClass>
+bool DObject::CDObjListe<TypeClass>::EstNouveau() const
+{
+	return CDObjState::EstNouveau();
+}
+//! Force l'objet à croire qu'il est nouveau
+template<class TypeClass>
+void DObject::CDObjListe<TypeClass>::SetNouveau()
+{
+	CDObjState::SetNouveau();
 }
 
 //! Indique si l'objet peut être initialisé
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::PeutEtreInitialiser()
 {
-	return CDObjEtat::PeutEtreInitialiser();
+	return CDObjState::PeutEtreInitialiser();
 }
 
 //! Indique si l'objet doit être initialisé
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::DoitEtreInitialiser()
 {
-	return CDObjEtat::DoitEtreInitialiser();
+	return CDObjState::DoitEtreInitialiser();
 }
 
 //! Indique si l'objet peut être sauvé
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::PeutEtreSauver()
 {
-	return (m_liste.size() && CDObjEtat::PeutEtreSauver());
+	return (m_liste.size() && CDObjState::PeutEtreSauver());
 }
 
 //! Indique si l'objet doit être sauvé
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::DoitEtreSauver()
 {
-	return (m_liste.size() && CDObjEtat::DoitEtreSauver());
+	return (m_liste.size() && CDObjState::DoitEtreSauver());
 }
 
 //! Indique si l'objet peut être supprimé
 template<class TypeClass>
 bool DObject::CDObjListe<TypeClass>::PeutEtreSupprimer()
 {
-	return (m_liste.size() && CDObjEtat::PeutEtreSupprimer());
+	return (m_liste.size() && CDObjState::PeutEtreSupprimer());
 }
 
 //! Indique si l'objet doit être supprimé
@@ -483,151 +595,3 @@ bool DObject::CDObjListe<TypeClass>::DoitEtreSupprimer()
 	return (m_liste.size() && EstPourSupprimer() && EstModifier() && !EstSupprimer());
 }
 
-//! Ajout d'un parent de type CDObjEtat*
-template<class TypeClass /*= CDObjBase*/>
-void DObject::CDObjListe<TypeClass>::AddParent(CDObjEtat* pObjEtat)
-{
-	if (!m_pParent)
-		m_pParent = new CDObjParent();
-
-	IDObjBase* pIObjBase = dynamic_cast<IDObjBase*>(pObjEtat);
-	if(pIObjBase)
-	{
-		m_pParent->Add(pIObjBase);
-		pIObjBase->AddEnfant(this);
-	}
-
-	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
-	if (pObjListe)
-	{
-		m_pParent->Add(pObjListe);
-		pObjListe->AddEnfant(this);
-	}
-
-	this->RegisterObservateur(m_pParent);
-}
-
-//! Retire un parent de type CDObjEtat*
-template<class TypeClass /*= CDObjBase*/>
-void DObject::CDObjListe<TypeClass>::RemoveParent(CDObjEtat* pObjEtat)
-{
-	if (!m_pParent)
-		return;
-
-	IDObjBase* pIObjBase = dynamic_cast<IDObjBase*>(pObjEtat);
-	if(pIObjBase)
-	{
-		m_pParent->Remove(pIObjBase);
-		pIObjBase->RemoveEnfant(this);
-	}
-
-	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
-	if (pObjListe)
-	{
-		m_pParent->Remove(pObjListe);
-		pObjListe->RemoveEnfant(this);
-	}
-
-	if (m_pParent->GetCount()==0)
-		this->RemoveObservateur(m_pParent);
-}
-
-//! Retire tous les enfants
-template<class TypeClass /*= CDObjBase*/>
-void DObject::CDObjListe<TypeClass>::RemoveEnfants()
-{
-	while(m_mObjBaseEnfant.size())
-	{
-		IDObjBase* pIObjBase = m_mObjBaseEnfant[0];
-		pIObjBase->RemoveParent(this);
-	}
-
-	while(m_mObjListeEnfant.size())
-	{
-		IDObjListe* pIObjListe = m_mObjListeEnfant[0];
-		pIObjListe->RemoveParent(this);
-	}
-
-	// 
-	while (GetParent<IDObjBase*>())
-	{
-		IDObjBase* pIObjBase = GetParent<IDObjBase*>();
-
-		// Enlève le parent
-		RemoveParent(pIObjBase);
-	}
-
-	// 
-	while (GetParent<IDObjListe*>())
-	{
-		IDObjListe* pObjListe = GetParent<IDObjListe*>();
-
-		// Enlève le parent
-		RemoveParent(pObjListe);
-	}
-}
-
-template<class TypeClass /*= CDObjBase*/>
-void DObject::CDObjListe<TypeClass>::AddEnfant(CDObjEtat* pObjEtat)
-{
-	IDObjBase* pIObjEnfant = dynamic_cast<IDObjBase*>(pObjEtat);
-	if(pIObjEnfant)
-	{
-		bool bExiste = false;
-		for(auto &enfant : m_mObjBaseEnfant)
-		{
-			IDObjBase* pParent = enfant;
-			if(pParent == pIObjEnfant)
-				bExiste = true;
-		}
-		if(!bExiste)
-			m_mObjBaseEnfant.emplace_back(pIObjEnfant);
-	}
-
-	IDObjListe* pIObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
-	if(pIObjListe)
-	{
-		bool bExiste = false;
-		for(auto &enfant : m_mObjListeEnfant)
-		{
-			IDObjListe* pParent = enfant;
-			if(pParent == pIObjListe)
-				bExiste = true;
-		}
-		if(!bExiste)
-			m_mObjListeEnfant.emplace_back(pIObjListe);
-	}
-}
-
-template<class TypeClass /*= CDObjBase*/>
-void DObject::CDObjListe<TypeClass>::RemoveEnfant(CDObjEtat* pObjEtat)
-{
-	IDObjBase* pIObjEnfant = dynamic_cast<IDObjBase*>(pObjEtat);
-	if(pIObjEnfant)
-	{
-		auto it = std::find(m_mObjBaseEnfant.begin(), m_mObjBaseEnfant.end(), pIObjEnfant);
-
-		if(it != m_mObjBaseEnfant.end())
-			m_mObjBaseEnfant.erase(it);
-	}
-
-	IDObjListe* pObjListe = dynamic_cast<IDObjListe*>(pObjEtat);
-	if(pObjListe)
-	{
-		auto it = std::find(m_mObjListeEnfant.begin(), m_mObjListeEnfant.end(), pObjListe);
-
-		if(it != m_mObjListeEnfant.end())
-			m_mObjListeEnfant.erase(it);
-	}
-}
-
-//! Retourne le parent de type CDObjBase* ou CDObListe<>*
-template<class TypeClass /*= CDObjBase*/>
-template<class T>
-T DObject::CDObjListe<TypeClass>::GetParent()
-{
-	if (!m_pParent)
-		return nullptr;
-
-	return m_pParent->Get<T>();
-}

@@ -35,10 +35,11 @@ namespace DObject
 	static bool _useCache = true;
 
 	// Evènements utilisés entre les objets et les listes
-	enum class NotificationEnfant
+	enum class DObjEvent
 	{
-		EnfantModifier,
-		EnfantPourSupprimer,
-		EnfantSupprimer
+		ObjetModifierEvent,				// L'objet est modifié
+		ObjetSauverEvent,				// L'objet est modifié
+		ObjetPourSupprimerEvent,		// L'objet est en attente de suppression
+		ObjetSupprimerEvent,			// L'objet est supprimé
 	};
 }

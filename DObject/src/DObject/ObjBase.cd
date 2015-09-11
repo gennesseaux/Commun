@@ -1,85 +1,77 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="DObject::CDObjBase">
-    <Position X="6.75" Y="8.25" Width="2.5" />
+    <Position X="6.75" Y="6.5" Width="2.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
-    <TypeIdentifier>
-      <HashCode>QABAAAFAADhAAoBCAAAZDAQEAHGwEAAxAEAjAgYAZCA=</HashCode>
-      <FileName>include\DObject\DObjBase.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjEtat">
-    <Position X="5.25" Y="3.5" Width="2" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAQAQEQABBAAABCAAAcBQQEIFCwAABRAEAnAAAAQAA=</HashCode>
-      <FileName>include\DObject\DObjEtat.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjListe&lt;TypeClass&gt;">
-    <Position X="1" Y="8.25" Width="2.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>QBZAAARAADoBAgGBAACADACEQiKAExARKIEjAAwQRCA=</HashCode>
-      <FileName>include\DObject\DObjListe.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjState">
-    <Position X="11" Y="2" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAQAQAQAAAAAIAAgAAGABRAAAAAAAAAAAAgAAgAACA=</HashCode>
-      <FileName>include\DObject\DObjState.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjStateListe">
-    <Position X="11" Y="3.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>CAIAAAAAAAAAAAAAAQACCAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>include\DObject\DObjState.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjBaseListe">
-    <Position X="1" Y="10.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>include\DObject\DObjListe.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DObject::CDObjParent">
-    <Position X="1" Y="3.5" Width="2.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <InheritanceLine Type="DObject::DObjObservateur" FixedFromPoint="true" FixedToPoint="true">
+    <InheritanceLine Type="DObject::CDObjState" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.312" Y="2.171" />
-        <Point X="2.312" Y="3.5" />
+        <Point X="5.438" Y="4.421" />
+        <Point X="5.438" Y="5.646" />
+        <Point X="8" Y="5.646" />
+        <Point X="8" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="DObject::CDObject" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.812" Y="4.07" />
+        <Point X="2.812" Y="5.885" />
+        <Point X="5.167" Y="5.885" Type="JumpStart" />
+        <Point X="5.333" Y="5.885" Type="JumpEnd" />
+        <Point X="7.375" Y="5.885" />
+        <Point X="7.375" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="DObject::CDObjUuid" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.625" Y="4.421" />
+        <Point X="8.625" Y="6.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAYQAAAAAAAAAABAAADABAAAAEAAAABBAAAgAAAAACA=</HashCode>
-      <FileName>include\DObject\DObjParent.h</FileName>
+      <HashCode>AAAAAAFAABhAAIBCAEAZBAQEAFGwEAAxAEAjAgIAZCA=</HashCode>
+      <FileName>include\DObject\DObjBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DObject::CDObjState">
+    <Position X="4.25" Y="3.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQAQEQABBAAABCgAAcBRQEAFCwAAARAEAnAAAAQAA=</HashCode>
+      <FileName>include\dobject\dobjstate.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DObject::CDObjListe&lt;TypeClass&gt;">
+    <Position X="1" Y="6.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="DObject::CDObject" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="1.875" Y="4.07" />
+        <Point X="1.875" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>ABYAAAFAABpBAAHDAECYBASEQlKwARARKMEjAAgQZCA=</HashCode>
+      <FileName>include\DObject\DObjListe.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DObject::CDObjMemState">
+    <Position X="11" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAQBQAAAAAAAAAAAGAAQgAAAAAAAAAAAgAAAACAA=</HashCode>
+      <FileName>include\dobject\dobjmemstate.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjUuid">
-    <Position X="8" Y="3.5" Width="2" />
+    <Position X="7" Y="3.25" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -89,64 +81,32 @@
       <FileName>include\DObject\DObjUuid.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::DObjObservable">
-    <Position X="5.25" Y="1" Width="2" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="DObject::CDObjMemStateListe">
+    <Position X="11" Y="6" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAgAIAAAAQAQAAAAAAAAAACQAA=</HashCode>
-      <FileName>include\DObject\DObjObserver.h</FileName>
+      <HashCode>AAIAAAQAAAAAAAAAAAACAAIAAAAAAAAAQAAgAAAAAAA=</HashCode>
+      <FileName>include\dobject\dobjmemstate.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::DObjObservateur">
-    <Position X="1" Y="1" Width="2.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="DObject::CDObject" Collapsed="true">
+    <Position X="1.25" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQAAABAAAAAAACAAAAAACAAEgBAAAAAgACEAiA=</HashCode>
-      <FileName>include\DObject\DObjObserver.h</FileName>
+      <HashCode>AAAAgAQgAIAIEAAAAAoASACAAAIAAAAAAAQwAAAAEAA=</HashCode>
+      <FileName>include\dobject\dobject.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::IDObjBase" Collapsed="true">
-    <Position X="6.75" Y="6.5" Width="2.5" />
-    <InheritanceLine Type="DObject::CDObjEtat" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="4.8" />
-        <Point X="6.25" Y="6.125" />
-        <Point X="7.562" Y="6.125" />
-        <Point X="7.562" Y="6.5" />
-      </Path>
-    </InheritanceLine>
-    <InheritanceLine Type="DObject::CDObjUuid" FixedToPoint="true">
-      <Path>
-        <Point X="9" Y="4.671" />
-        <Point X="9" Y="6.125" />
-        <Point X="8.25" Y="6.125" />
-        <Point X="8.25" Y="6.5" />
-      </Path>
-    </InheritanceLine>
+  <Class Name="DObject::CDObjBaseListe">
+    <Position X="1" Y="10.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AABAQABAAAgAAgAAAAAACAAEAAAAAAAAAAAAAAAAJCA=</HashCode>
-      <FileName>include\DObject\IDObjBase.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>include\DObject\DObjListe.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::IDObjListe" Collapsed="true">
-    <Position X="1" Y="6.5" Width="2.5" />
-    <InheritanceLine Type="DObject::CDObjEtat" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6" Y="4.8" />
-        <Point X="6" Y="6.125" />
-        <Point X="2.5" Y="6.125" />
-        <Point X="2.5" Y="6.5" />
-      </Path>
-    </InheritanceLine>
+  <Class Name="DObject::DObjSaveGuard" Collapsed="true">
+    <Position X="6.25" Y="1.25" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AARAAAAAAAIAAgAAAAAADAAEAAAAAAAAAAAAAAgABAA=</HashCode>
-      <FileName>include\DObject\IDObjListe.h</FileName>
+      <HashCode>gAAAAAQAACAAAQAAAAAAAIAAAAAAAIAgAAAwAAAAQAA=</HashCode>
+      <FileName>include\DObject\DObjSaveGuard.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

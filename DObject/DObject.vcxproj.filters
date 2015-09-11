@@ -14,9 +14,6 @@
     <ClInclude Include="include\DObject\DObjBase.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\DObjEtat.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\DObject\DObjGlobal.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -26,22 +23,22 @@
     <ClInclude Include="include\DObject\DObjListe.tpl.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\DObjObserver.h">
+    <ClInclude Include="include\DObject\DObjUuid.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\DObjParent.h">
+    <ClInclude Include="include\DObject\DObjMemState.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\DObject\DObjState.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\DObjUuid.h">
+    <ClInclude Include="include\DObject\IDObjEventNotification.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\IDObjBase.h">
+    <ClInclude Include="include\DObject\DObject.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\DObject\IDObjListe.h">
+    <ClInclude Include="include\DObject\DObjSaveGuard.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
@@ -49,23 +46,26 @@
     <ClCompile Include="src\DObject\DObjBase.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\DObject\DObjEtat.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DObject\DObjObserver.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DObject\DObjParent.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DObject\dObjState.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\DObject\DObjUuid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjMemState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObject.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DObject\DObjSaveGuard.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\DObject\ObjBase.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt" />
   </ItemGroup>
 </Project>

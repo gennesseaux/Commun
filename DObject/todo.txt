@@ -1,0 +1,6 @@
+
+
+* Ajouter et appeler des méthodes virtuelles :
+	- OnModifier
+	- OnPourSupprimer
+	- OnSupprimer

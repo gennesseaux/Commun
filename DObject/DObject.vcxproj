@@ -89,27 +89,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\DObject\DObjBase.h" />
-    <ClInclude Include="include\DObject\DObjEtat.h" />
+    <ClInclude Include="include\DObject\DObject.h" />
+    <ClInclude Include="include\DObject\DObjSaveGuard.h" />
+    <ClInclude Include="include\DObject\DObjState.h" />
     <ClInclude Include="include\DObject\DObjGlobal.h" />
     <ClInclude Include="include\DObject\DObjListe.h" />
     <ClInclude Include="include\DObject\DObjListe.tpl.h" />
-    <ClInclude Include="include\DObject\DObjObserver.h" />
-    <ClInclude Include="include\DObject\DObjParent.h" />
-    <ClInclude Include="include\DObject\DObjState.h" />
+    <ClInclude Include="include\DObject\DObjMemState.h" />
     <ClInclude Include="include\DObject\DObjUuid.h" />
-    <ClInclude Include="include\DObject\IDObjBase.h" />
-    <ClInclude Include="include\DObject\IDObjListe.h" />
+    <ClInclude Include="include\DObject\IDObjEventNotification.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DObject\DObjBase.cpp" />
-    <ClCompile Include="src\DObject\DObjEtat.cpp" />
-    <ClCompile Include="src\DObject\DObjObserver.cpp" />
-    <ClCompile Include="src\DObject\DObjParent.cpp" />
-    <ClCompile Include="src\DObject\dObjState.cpp" />
+    <ClCompile Include="src\DObject\DObject.cpp" />
+    <ClCompile Include="src\DObject\DObjSaveGuard.cpp" />
+    <ClCompile Include="src\DObject\DObjState.cpp" />
+    <ClCompile Include="src\DObject\DObjMemState.cpp" />
     <ClCompile Include="src\DObject\DObjUuid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\DObject\ObjBase.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

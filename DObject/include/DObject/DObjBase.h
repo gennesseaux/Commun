@@ -11,32 +11,28 @@
 #pragma once
 
 // Inclusions
-#include "DObject/IDObjBase.h"
+#include "DObject/DObjGlobal.h"
+#include "DObject/DObject.h"
+#include "DObject/DObjState.h"
+#include "DObject/DObjUuid.h"
+#include "DObject/DObjSaveGuard.h"
 
 
 namespace DObject
 {
-	class CDObjParent;
-	class IDObjBase;
-	class IDObjListe;
-
-	class CDObjBase : public IDObjBase
+	class CDObjBase : public CDObject, public CDObjState, public CDObjUuid
 	{
-		friend class CDObjState;
+		friend class CDObjMemState;
 
 	public:
 		//! Constructeur
-		CDObjBase(unsigned long ulId = DefULong);
-		//! Destructeur est déclaré protected, il faut utiliser une des méthodes delete ci-dessus.
-		virtual ~CDObjBase(void);
+		CDObjBase(unsigned long ulId = DefULong, CDObject* pOwner = nullptr);
 		//! Constructeur par copie
 		CDObjBase(const CDObjBase &source);														
+		//! Destructeur
+		virtual ~CDObjBase(void);
 		//! Opérateur =
 		CDObjBase &operator=(const CDObjBase &source);
-		////! Constructeur de déplacement
-		//CDObjBase(CDObjBase&& source);														
-		////! Opérateur de déplacement
-		//CDObjBase &operator=(CDObjBase&& source);
 		//! Clone les données (Utilisé par le constructeur par copie et l'opérateur =)
 		void ClonnerDonnees(const CDObjBase &source);
 
@@ -45,6 +41,11 @@ namespace DObject
 		//! Delete
 		static CDObjBase* Delete(CDObjBase* pObjBase);
 
+		//! Pointeur vers CDObject
+		virtual CDObject* GetDObject();
+
+
+	// Gestion des données
 	public:
 		//! Initialise les données de l'objet.
 		virtual void InitialiserDonnees() = 0;
@@ -57,6 +58,11 @@ namespace DObject
 		virtual bool Sauver() = 0;
 		//! Supprime l'instance en base.
 		virtual bool Supprimer() = 0;
+
+	// Gestion des évènements
+	protected:
+		//! Notification d'évènement
+		virtual void OnEvent(DObjEvent& event, CDObject* sender) final;
 
 
 	// Accesseurs
@@ -79,6 +85,7 @@ namespace DObject
 		//! Indique si l'objet est marqué pour suppression.
 		virtual bool EstPourSupprimer() const final;
 		virtual void SetPourSupprimer(bool bPourSupprimer = true) final;
+		virtual void SetPourSupprimer(bool bPourSupprimer, bool bCascadeChild) final;
 
 		//! Indique si l'objet à été acquis
 		virtual bool EstAcquis() const final;
@@ -109,49 +116,17 @@ namespace DObject
 		virtual bool DoitEtreSupprimer() final;
 
 	public:
-		//! Ajout d'un parent de type CDObjEtat*
-		void AddParent(CDObjEtat* pObjEtat);
-		//! Retire un parent de type CDObjEtat*
-		void RemoveParent(CDObjEtat* pObjEtat);
-		//! Retourne le parent de type CDObjBase* ou CDObjBaseListe*
-		template<class T> T GetParent();
-		//! Retire tous les enfants
-		void RemoveEnfants();
-
-	protected:
-		//!
-		void AddEnfant(CDObjEtat* pObjEtat);
-		//!
-		void RemoveEnfant(CDObjEtat* pObjEtat);
-
-	public:
 		//! Prédicat de comparaison des objet 
 		static bool CompareIdPredicate(const CDObjBase* _Left, const CDObjBase* _Right) { return (_Left->m_ulId < _Right->m_ulId); }
 		static bool CompareModifiePredicate(const CDObjBase* _Left, const CDObjBase* _Right) { return (_Left->EstModifier() < _Right->EstModifier()); }
 		static bool ComparePourSupprimerPredicate(const CDObjBase* _Left, const CDObjBase* _Right) { return (_Left->EstPourSupprimer() < _Right->EstPourSupprimer()); }
 
 	public:
-		//! Autorise les listes à détrure l'objet
+		//! Autorise les listes à détruire l'objet
 		bool m_bAutoDeleteFromList = true;
 
 	protected:
 		//! Identifiant de l'objet
 		unsigned long	m_ulId;
-
- 		//! Parent de l'objet
-		CDObjParent*				m_pParent = nullptr;
-		std::vector<IDObjBase*>		m_mObjBaseEnfant;
-		std::vector<IDObjListe*>	m_mObjListeEnfant;
 	};
- 
- 	//! Retourne le parent de type CDObjEtat*
- 	template<class T>
- 	T DObject::CDObjBase::GetParent()
- 	{
-		if (!m_pParent)
-			return nullptr;
-
-		return m_pParent->Get<T>();
-	}
-
-}
+ }
