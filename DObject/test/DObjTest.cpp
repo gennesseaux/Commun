@@ -6,11 +6,13 @@
 namespace DObject
 {
 	//! Constructeur
-	CDObjTest::CDObjTest(unsigned long ulId)  : CDObjBase(ulId)
+	CDObjTest::CDObjTest(unsigned long ulId, CDObject* pOwner /*= nullptr*/)  : CDObjBase(ulId,pOwner)
 	{
 		/* Initialisation des pointeurs. */
-		_pointeur = nullptr;
-		_pointeurListe = nullptr;
+		_pointeur1 = nullptr;
+		_pointeur2 = nullptr;
+		_pointeurListe1 = nullptr;
+		_pointeurListe2 = nullptr;
 
 		/* Initialisation des données. */
 		InitialiserDonnees();
@@ -19,8 +21,6 @@ namespace DObject
 	//! Destructeur
 	CDObjTest::~CDObjTest(void)
 	{
-		RemoveEnfants();
-
 		/* Initialisation des données. */
 		InitialiserDonnees();
 	}
@@ -29,8 +29,10 @@ namespace DObject
 	CDObjTest::CDObjTest(const CDObjTest &source)
 	{
 		/* Initialisation des pointeurs. */
-		_pointeur = nullptr;
-		_pointeurListe = nullptr;
+		_pointeur1 = nullptr;
+		_pointeur2 = nullptr;
+		_pointeurListe1 = nullptr;
+		_pointeurListe2 = nullptr;
 
 		/* Initialisation des données. */
 		InitialiserDonnees();
@@ -51,51 +53,6 @@ namespace DObject
 		return *this;
 	}
 
-	////! Constructeur de déplacement.
-	//CDObjTest::CDObjTest(CDObjTest&& source)
-	//{
-	//	_string1 = source._string1;
-	//	_string2 = source._string2;
-	//	_l1 = source._l1;
-	//	_l2 = source._l2;
-	//	_ul3 = source._ul3;
-	//	_pointeur = source._pointeur;
-	//	_pointeurListe = source._pointeurListe;
-
-	//	source._string1 = "";
-	//	source._string2 = "";
-	//	source._l1 = DefLong;
-	//	source._l2 = DefLong;
-	//	source._ul3 = DefULong;
-	//	source._pointeur = nullptr;
-	//	source._pointeurListe = nullptr;
-	//}
-
-	////! Opérateur de déplacement
-	//CDObjTest & CDObjTest::operator=(CDObjTest&& source)
-	//{
-	//	if(this != &source)
-	//	{
-	//		_string1 = source._string1;
-	//		_string2 = source._string2;
-	//		_l1 = source._l1;
-	//		_l2 = source._l2;
-	//		_ul3 = source._ul3;
-	//		_pointeur = source._pointeur;
-	//		_pointeurListe = source._pointeurListe;
-
-	//		source._string1 = "";
-	//		source._string2 = "";
-	//		source._l1 = DefLong;
-	//		source._l2 = DefLong;
-	//		source._ul3 = DefULong;
-	//		source._pointeur = nullptr;
-	//		source._pointeurListe = nullptr;
-	//	}
-
-	//	return *this;
-	//}
-
 	void CDObjTest::ClonnerDonnees(const CDObjTest &source)
 	{
 		CDObjBase::ClonnerDonnees(source);
@@ -104,30 +61,34 @@ namespace DObject
 		InitialiserDonnees();
 
 		/* Copie des variables membres de l'objet. */
-		//_l1 = source._l1;
-		//_l2 = source._l2;
-		//_ul3 = source._ul3;
 		_string1 = source._string1;
-		//_string2 = source._string2;
 
 		/* Copie des pointeurs membres de l'objet. */
-		if (source._pointeur)
-			_pointeur = new CDObjTest(*source._pointeur);
+		delete _pointeur1; _pointeur1 = nullptr;
+		if (source._pointeur1)
+			_pointeur1 = new CDObjTest(*source._pointeur1);
 
-		if (source._pointeurListe)
-			_pointeurListe = new CDObjTestListe(*source._pointeurListe);
+		delete _pointeur2; _pointeur2 = nullptr;
+		if(source._pointeur2)
+			_pointeur2 = new CDObjTest(*source._pointeur2);
+
+		delete _pointeurListe1; _pointeurListe1 = nullptr;
+		if (source._pointeurListe1)
+			_pointeurListe1 = new CDObjTestListe(*source._pointeurListe1);
+
+		delete _pointeurListe2; _pointeurListe2 = nullptr;
+		if(source._pointeurListe2)
+			_pointeurListe2 = new CDObjTestListe(*source._pointeurListe2);
 	}
 
 	void CDObjTest::InitialiserDonnees()
 	{
-		//_l1 = DefLong;
-		//_l2 = DefLong;
-		//_ul3 = DefULong;
 		_string1 = std::string("");
-		//_string2 = std::string("");
 
-		delete _pointeur; _pointeur = nullptr;
-		delete _pointeurListe; _pointeurListe = nullptr;
+		delete _pointeur1; _pointeur1 = nullptr;
+		delete _pointeur2; _pointeur2 = nullptr;
+		delete _pointeurListe1; _pointeurListe1 = nullptr;
+		delete _pointeurListe2; _pointeurListe2 = nullptr;
 	}
 
 	bool CDObjTest::Initialiser()
@@ -154,8 +115,10 @@ namespace DObject
 		// pas être vérifiés lors de la création.
 		if (!EstNouveau())
 		{
-			if (_pointeur && (!_pointeur->Verifier(sMsg))) return false;
-			if (_pointeurListe && (!_pointeurListe->Verifier(sMsg))) return false;
+			if (_pointeur1 && (!_pointeur1->Verifier(sMsg))) return false;
+			if (_pointeur2 && (!_pointeur2->Verifier(sMsg))) return false;
+			if (_pointeurListe1 && (!_pointeurListe1->Verifier(sMsg))) return false;
+			if (_pointeurListe2 && (!_pointeurListe2->Verifier(sMsg))) return false;
 		}
 
 		if (!Initialiser())			{ if (sMsg) sMsg->assign("Erreur lors de l'initialisation."); return false; }
@@ -166,15 +129,33 @@ namespace DObject
 
 	bool CDObjTest::Sauver()
 	{
+		// L'objet n'est pas modifié
 		if ( !(DoitEtreSauver() || DoitEtreSupprimer()) ) return true;
+		// L'objet est supprimé
 		if ( !(PeutEtreSauver() || PeutEtreSupprimer()) ) return false;
+		// L'objet est à supprimer
+		if ( DoitEtreSupprimer() ) return Supprimer();
 
-		// Mémorisation de l'etat de l'objet avant sauvegarde
-		CDObjState state(this);
+		// SaveGuard
+		DObjSaveGuard::Start(this);
 
 		// ...
 		// Mettre ici le code avant sauvegarde de l'objet
 		// ...
+
+		
+		// Sauvegarde de _pointeur1
+		if(_pointeur1 && !_pointeur1->Sauver())
+			return DObjSaveGuard::Error(this);
+		// Mise à jour
+		//if(_pointeur1) SetXXXX(_pointeur1->GetXXX());
+		
+		// Sauvegarde de _pointeur2
+		if(_pointeur2 && !_pointeur2->Sauver())
+			return DObjSaveGuard::Error(this);
+		// Mise à jour
+		//if(_pointeur2) SetXXXX(_pointeur2->GetXXX());
+
 
 		// ...
 		// Mettre ici le code de sauvegarde de l'objet
@@ -188,19 +169,34 @@ namespace DObject
 		// ...
 
 
+		
+		// Sauvegarde de _pointeurListe1
+		if(_pointeurListe1 && !_pointeurListe1->Sauver())
+			return DObjSaveGuard::Error(this);
+
+		// Sauvegarde de _pointeurListe2
+		if(_pointeurListe2 && !_pointeurListe2->Sauver())
+			return DObjSaveGuard::Error(this);
+
+
 		// L'objet est acquis
 		SetAcquis();
 
-		return true;
+		return DObjSaveGuard::Sucess(this);
 	}
 
 	bool CDObjTest::Supprimer()
 	{
-		if (DoitEtreSupprimer() == false) { SetSupprimer(true);  return true; }
-		if (PeutEtreSupprimer() == false) { SetSupprimer(false); return false; }
+		if (DoitEtreSupprimer() == false) return false;
+		if (PeutEtreSupprimer() == false) return false;
 
-		// Mémorisation de l'etat de l'objet avant sauvegarde
-		CDObjState state(this);
+		// SaveGuard
+		DObjSaveGuard::Start(this);
+
+
+		//
+		if(_string1 == "DoNotDelete")
+			return DObjSaveGuard::Error(this);
 
 		// ...
 		// Mettre ici le code avant suppression de l'objet
@@ -221,100 +217,19 @@ namespace DObject
 		// L'objet est supprimé
 		SetSupprimer();
 
-		return true;
+		return DObjSaveGuard::Sucess(this);
 	}
 
-	//long CDObjTest::GetL1()
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return DefLong;
-
-	//	return _l1;
-	//}
-
-	//bool CDObjTest::SetL1(long l1)
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return false;
-
-	//	// Le champ est modifié uniquement si sa valeur change.
-	//	if (_l1 != l1)
-	//	{
-	//		// Affectation de la nouvelle valeur.
-	//		_l1 = l1;
-
-	//		// Marquer l'objet comme modifié.
-	//		SetModifier();
-	//	}
-
-	//	// Le changement de valeur a réussi.
-	//	return true;
-	//}
-
-	//long CDObjTest::GetL2()
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return DefLong;
-
-	//	return _l2;
-	//}
-
-	//bool CDObjTest::SetL2(long l2)
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return false;
-
-	//	// Le champ est modifié uniquement si sa valeur change.
-	//	if (_l2 != l2)
-	//	{
-	//		// Affectation de la nouvelle valeur.
-	//		_l2 = l2;
-
-	//		// Marquer l'objet comme modifié.
-	//		SetModifier();
-	//	}
-
-	//	// Le changement de valeur a réussi.
-	//	return true;
-	//}
-
-	//unsigned long CDObjTest::GetUL3()
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return DefLong;
-
-	//	return _ul3;
-	//}
-
-	//bool CDObjTest::SetUL3(unsigned long ul3)
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return false;
-
-	//	// Le champ est modifié uniquement si sa valeur change.
-	//	if (_ul3 != ul3)
-	//	{
-	//		// Affectation de la nouvelle valeur.
-	//		_ul3 = ul3;
-
-	//		// Marquer l'objet comme modifié.
-	//		SetModifier();
-	//	}
-
-	//	// Le changement de valeur a réussi.
-	//	return true;
-	//}
-
-	bool CDObjTest::SetString1(std::string string1)
+	bool CDObjTest::SetString(std::string string)
 	{
 		// L'objet doit être initialisé
 		if (!Initialiser()) return false;
 
 		// Le champ est modifié uniquement si sa valeur change.
-		if (_string1 != string1)
+		if (_string1 != string)
 		{
 			// Affectation de la nouvelle valeur.
-			_string1 = string1;
+			_string1 = string;
 
 			// Marquer l'objet comme modifié.
 			SetModifier();
@@ -324,7 +239,7 @@ namespace DObject
 		return true;
 	}
 
-	std::string CDObjTest::GetString1()
+	std::string CDObjTest::GetString()
 	{
 		// L'objet doit être initialisé
 		if (!Initialiser()) return std::string("");
@@ -332,55 +247,108 @@ namespace DObject
 		return _string1;
 	}
 
-	//bool CDObjTest::SetString2(std::string string2)
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return false;
-
-	//	// Le champ est modifié uniquement si sa valeur change.
-	//	if (_string2 != string2)
-	//	{
-	//		// Affectation de la nouvelle valeur.
-	//		_string2 = string2;
-
-	//		// Marquer l'objet comme modifié.
-	//		SetModifier();
-	//	}
-
-	//	// Le changement de valeur a réussi.
-	//	return true;
-	//}
-
-	//std::string CDObjTest::GetString2()
-	//{
-	//	// L'objet doit être initialisé
-	//	if (!Initialiser()) return std::string("");
-
-	//	return _string2;
-	//}
-
-	CDObjTestListe* CDObjTest::GetPointeurListe(bool bInit)
+	CDObjTest* CDObjTest::GetPointeur1()
 	{
 		// L'objet doit être initialisé
 		if (!Initialiser()) return nullptr;
 
 		// Si la liste n'existe pas, alosr on la crée. 
-		if (_pointeurListe == nullptr)
+		if(_pointeur1 == nullptr)
 		{
-			_pointeurListe = new CDObjTestListe("Liste enfant");
-			_pointeurListe->AddParent(this);
-		//	if (bInit) _pointeurListe->InitialiserAPartirDePrjIdent(m_ulId);
-		//}
-		//// 
-		//else if (_pointeurListe && _pointeurListe->GetPrjIdent() != m_ulId)
-		//{
-		//	delete _pointeurListe; _pointeurListe = nullptr;
-		//	return GetPointeurListe(bInit);
+			_pointeur1 = new CDObjTest(1,this);
 		}
 
-		return _pointeurListe;
+		//// 
+		//if(_pointeur1 && _pointeur1->GetString1() != "Liste 1 enfant")
+		//{
+		//	delete _pointeur1; _pointeur1 = nullptr;
+		//	return GetPointeur1();
+		//}
+
+		return _pointeur1;
 	}
 
+	CDObjTest* CDObjTest::GetPointeur2()
+	{
+		// L'objet doit être initialisé
+		if (!Initialiser()) return nullptr;
+
+		// Si la liste n'existe pas, alosr on la crée. 
+		if(_pointeur2 == nullptr)
+		{
+			_pointeur2 = new CDObjTest(2,this);
+		}
+
+		//// 
+		//if(_pointeur2 && _pointeur2->GetString1() != "Liste 1 enfant")
+		//{
+		//	delete _pointeur2; _pointeur2 = nullptr;
+		//	return GetPointeur2();
+		//}
+
+		return _pointeur2;
+	}
+
+	CDObjTestListe* CDObjTest::GetPointeurListe1(bool bInit)
+	{
+		// L'objet doit être initialisé
+		if (!Initialiser()) return nullptr;
+
+		// Si la liste n'existe pas, alosr on la crée. 
+		if(_pointeurListe1 == nullptr)
+		{
+			_pointeurListe1 = new CDObjTestListe("Liste 1 enfant",this);
+			//if(bInit) _pointeurListe->InitialiserAPartirDePrjIdent(m_ulId);
+		}
+		// 
+		else if(_pointeurListe1 && _pointeurListe1->GetString1() != "Liste 1 enfant")
+		{
+			delete _pointeurListe1; _pointeurListe1 = nullptr;
+			return GetPointeurListe1(bInit);
+		}
+
+		return _pointeurListe1;
+	}
+
+	CDObjTestListe* CDObjTest::GetPointeurListe2(bool bInit)
+	{
+		// L'objet doit être initialisé
+		if (!Initialiser()) return nullptr;
+
+		// Si la liste n'existe pas, alosr on la crée. 
+		if(_pointeurListe2 == nullptr)
+		{
+			_pointeurListe2 = new CDObjTestListe("Liste 2 enfant",this);
+			//if(bInit) _pointeurListe2->InitialiserAPartirDePrjIdent(m_ulId);
+		}
+		// 
+		else if(_pointeurListe2 && _pointeurListe2->GetString1() != "Liste 2 enfant")
+		{
+			delete _pointeurListe2; _pointeurListe2 = nullptr;
+			return GetPointeurListe2(bInit);
+		}
+
+		return _pointeurListe2;
+	}
+
+	void CDObjTest::OnModifier(CDObject* pDObject,CDObject* sender)
+	{
+		int todo = 0;
+	}
+
+	void CDObjTest::OnSauver(CDObject* pDObject,CDObject* sender)
+	{
+		int todo = 0;
+	}
+
+	void CDObjTest::OnSupprimer(CDObject* pDObject,CDObject* sender)
+	{
+		if(_pointeur1 && _pointeur1==pDObject)					_pointeur1 = nullptr;
+		if(_pointeur2 && _pointeur2==pDObject)					_pointeur2 = nullptr;
+		if(_pointeurListe1 && _pointeurListe1==pDObject)		_pointeurListe1 = nullptr;
+		if(_pointeurListe2 && _pointeurListe2==pDObject)		_pointeurListe2 = nullptr;
+		int todo = 0;
+	}
 
 
 
@@ -392,7 +360,7 @@ namespace DObject
 
 
 	//! Constructeur
-	CDObjTestListe::CDObjTestListe(std::string string)
+	CDObjTestListe::CDObjTestListe(std::string string, CDObject* pOwner /*= nullptr*/) : CDObjListe(pOwner)
 	{
 		/* Initialisation des pointeurs. */
 
@@ -465,7 +433,7 @@ namespace DObject
 
 
 		// L'objet est acquis
-		if (GetCount())
+		if (GetSize())
 			SetAcquis();
 
 		// L'objet est initialisé
@@ -489,8 +457,15 @@ namespace DObject
 	//! Sauvegarde
 	bool CDObjTestListe::Sauver()
 	{
+		// L'objet n'est pas modifié
 		if ( !(DoitEtreSauver() || DoitEtreSupprimer()) ) return true;
+		// L'objet est supprimé
 		if ( !(PeutEtreSauver() || PeutEtreSupprimer()) ) return false;
+		// L'objet est à supprimer
+		if ( DoitEtreSupprimer() ) return Supprimer();
+		
+		// SaveGuard
+		DObjSaveGuard::Start(this);
 
 		// ...
 		// Mettre ici le code avant sauvegarde des objets
@@ -498,7 +473,7 @@ namespace DObject
 
 		// Sauvegarde des objets
 		if (!CDObjListe::Sauver())
-			return false;
+			return DObjSaveGuard::Error(this);
 
 		// ...
 		// Mettre ici le code après sauvegarde des objets
@@ -508,7 +483,7 @@ namespace DObject
 		// Les objets sont acquis
 		SetAcquis();
 
-		return true;
+		return DObjSaveGuard::Sucess(this);
 	}
 
 	//! Suppression
@@ -516,6 +491,9 @@ namespace DObject
 	{
 		if (DoitEtreSupprimer() == false) return true;
 		if (PeutEtreSupprimer() == false) return false;
+		
+		// SaveGuard
+		DObjSaveGuard::Start(this);
 
 		// ...
 		// Mettre ici le code avant suppression des objets
@@ -523,7 +501,7 @@ namespace DObject
 
 		// Suppression des objets
 		if (!CDObjListe::Supprimer())
-			return false;
+			return DObjSaveGuard::Error(this);
 
 		// ...
 		// Mettre ici le code après suppression des objets
@@ -533,7 +511,46 @@ namespace DObject
 		// Les objets sont supprimés
 		SetSupprimer();
 
+		return DObjSaveGuard::Sucess(this);
+	}
+
+	bool CDObjTestListe::SetString1(std::string string)
+	{
+		// L'objet doit être initialisé
+		if (!Initialiser()) return false;
+
+		// Le champ est modifié uniquement si sa valeur change.
+		if (_string != string)
+		{
+			// Affectation de la nouvelle valeur.
+			_string = string;
+
+			// Marquer l'objet comme modifié.
+			SetModifier();
+		}
+
+		// Le changement de valeur a réussi.
 		return true;
+	}
+
+	std::string CDObjTestListe::GetString1()
+	{
+		return _string;
+	}
+
+	void CDObjTestListe::OnModifier(CDObject* pDObject,CDObject* sender)
+	{
+		int todo = 0;
+	}
+
+	void CDObjTestListe::OnSauver(CDObject* pDObject,CDObject* sender)
+	{
+		int todo = 0;
+	}
+
+	void CDObjTestListe::OnSupprimer(CDObject* pDObject,CDObject* sender)
+	{
+		int todo = 0;
 	}
 
 }

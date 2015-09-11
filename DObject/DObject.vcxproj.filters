@@ -65,7 +65,4 @@
   <ItemGroup>
     <None Include="src\DObject\ObjBase.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="todo.txt" />
-  </ItemGroup>
 </Project>
