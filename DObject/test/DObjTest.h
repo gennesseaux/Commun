@@ -29,7 +29,7 @@ namespace DObject
 	{
 	public:
 		//! Constructeur
-		CDObjTest(unsigned long ulId);
+		CDObjTest(unsigned long ulId, CDObject* pOwner = nullptr);
 		//! Destructeur
 		~CDObjTest(void);
 
@@ -37,10 +37,6 @@ namespace DObject
 		CDObjTest(const CDObjTest &source);
 		//! Opérateur =
 		CDObjTest &operator=(const CDObjTest &source);
-		////! Constructeur de déplacement.
-		//CDObjTest(CDObjTest&& source);
-		////! Opérateur de déplacement
-		//CDObjTest &operator=(CDObjTest&& source);
 
 		//! Clonage des données utilisée par le constructeur par copie ainsi que l'opérateur =
 		void ClonnerDonnees(const CDObjTest &source);
@@ -58,36 +54,36 @@ namespace DObject
 		//! Suppression de l'objet
 		virtual bool Supprimer();
 
+	// Gestion des évènements
 	public:
-		std::string GetString1();
-		bool SetString1(std::string string1);
+		//! Notification d'évènement
+		virtual void OnModifier(CDObject* pDObject, CDObject* sender);
+		//! Notification d'évènement
+		virtual void OnSauver(CDObject* pDObject, CDObject* sender);
+		//! Notification d'évènement
+		virtual void OnSupprimer(CDObject* pDObject, CDObject* sender);
 
-		//std::string GetString2();
-		//bool SetString2(std::string string2);
-
-		//long GetL1() ;
-		//bool SetL1(long l1);
-
-		//long GetL2();
-		//bool SetL2(long l2);
-
-		//unsigned long GetUL3();
-		//bool SetUL3(unsigned long ul3);
+	// Accesseurs
+	public:
+		std::string GetString();
+		bool SetString(std::string string1);
 
 		
-		CDObjTestListe* GetPointeurListe(bool bInit = true);
+		CDObjTest* GetPointeur1();
+		CDObjTest* GetPointeur2();
+		
+		CDObjTestListe* GetPointeurListe1(bool bInit = true);
+		CDObjTestListe* GetPointeurListe2(bool bInit = true);
 
 
 	private:
 		// Données membres
 		std::string		_string1;
-		//std::string		_string2;
-		//long			_l1;
-		//long			_l2;
-		//unsigned long	_ul3;
 
-		CDObjTest*		_pointeur;
-		CDObjTestListe*	_pointeurListe;
+		CDObjTest*		_pointeur1;
+		CDObjTest*		_pointeur2;
+		CDObjTestListe*	_pointeurListe1;
+		CDObjTestListe*	_pointeurListe2;
 	};
 
 
@@ -97,7 +93,7 @@ namespace DObject
 	{
 	public:
 		//! Constructeur
-		CDObjTestListe(std::string string);
+		CDObjTestListe(std::string string, CDObject* pOwner = nullptr);
 		//! Destructeur
 		~CDObjTestListe(void);
 
@@ -119,6 +115,20 @@ namespace DObject
 		virtual bool Sauver();
 		//! Suppression
 		virtual bool Supprimer();
+
+	// Gestion des évènements
+	public:
+		//! Notification d'évènement
+		virtual void OnModifier(CDObject* pDObject, CDObject* sender);
+		//! Notification d'évènement
+		virtual void OnSauver(CDObject* pDObject, CDObject* sender);
+		//! Notification d'évènement
+		virtual void OnSupprimer(CDObject* pDObject, CDObject* sender);
+
+	// Accesseurs
+	public:
+		std::string GetString1();
+		bool SetString1(std::string string1);
 
 
 	private:
