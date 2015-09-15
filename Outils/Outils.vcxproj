@@ -21,7 +21,7 @@
     <ClInclude Include="include\Outils\VariantStream.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\StringTools.cpp" />
+    <ClCompile Include="src\Outils\StringTools.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{407D9119-86DD-4CE1-8E3D-37A00BCD3849}</ProjectGuid>

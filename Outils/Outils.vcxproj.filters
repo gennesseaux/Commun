@@ -38,7 +38,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\StringTools.cpp">
+    <ClCompile Include="src\Outils\StringTools.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
