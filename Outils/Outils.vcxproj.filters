@@ -1,24 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\Outils\NotificationClientRegistry.h" />
-    <ClInclude Include="include\Outils\SafeSingletonHolder.h" />
-    <ClInclude Include="include\Outils\static_check.h" />
-    <ClInclude Include="include\Outils\StringTools.h" />
-    <ClInclude Include="include\Outils\TypeManip.h" />
     <ClInclude Include="include\Outils\StreamSupport.h">
-      <Filter>VariantStream</Filter>
+      <Filter>include\VariantStream</Filter>
     </ClInclude>
     <ClInclude Include="include\Outils\Stream.h">
-      <Filter>VariantStream</Filter>
+      <Filter>include\VariantStream</Filter>
     </ClInclude>
     <ClInclude Include="include\Outils\VariantStream.h">
-      <Filter>VariantStream</Filter>
+      <Filter>include\VariantStream</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Outils\NotificationClientRegistry.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Outils\SafeSingletonHolder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Outils\static_check.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Outils\StringTools.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Outils\TypeManip.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="VariantStream">
+    <Filter Include="include">
+      <UniqueIdentifier>{8f33a5b6-1128-4e70-8d38-2998c3482109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\VariantStream">
       <UniqueIdentifier>{f81c5707-a430-478e-88a6-4187a9e657e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2ce97b42-448c-43f7-b8c7-9ba316c68a70}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\StringTools.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

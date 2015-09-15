@@ -32,11 +32,11 @@ namespace RcReader
 
 	protected:
 		//! Constructeur
-		CRcReader();
+		CRcReader() = delete;
 		//! Constructeur par copie
-		CRcReader(const CRcReader &source);														
+		CRcReader(const CRcReader &source) = delete;														
 		//! Opérateur =
-		CRcReader &operator=(const CRcReader &source);
+		CRcReader &operator=(const CRcReader &source) = delete;
 
 	protected:
 		void parse();

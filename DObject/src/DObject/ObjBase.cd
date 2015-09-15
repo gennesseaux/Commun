@@ -31,7 +31,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAFAABhAAIBCAEAZBAQEAFGwEAAxAEAjAgIAZCA=</HashCode>
+      <HashCode>AAAAAAFAABhAAMBCAEAZBAQEAFGwEAAxAEAjAgIAZCA=</HashCode>
       <FileName>include\DObject\DObjBase.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -42,7 +42,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAQAQEQABBAAABCgAAcBRQEAFCwAAARAEAnAAAAQAA=</HashCode>
+      <HashCode>AAAQAQEQABBAAEBCgAAcBRQEAFCwAAARAEAnAAAAQAA=</HashCode>
       <FileName>include\dobject\dobjstate.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,15 +59,15 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>ABYAAAFAABpBAAHDAECYBASEQlKwARARKMEjAAgQZCA=</HashCode>
+      <HashCode>ABYAAAFAABpBAEHDAECYBASEQlKwARARKMEjAAgQZCA=</HashCode>
       <FileName>include\DObject\DObjListe.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::CDObjMemState">
-    <Position X="11" Y="2" Width="2.5" />
+  <Class Name="DObject::CDObjMemState" Collapsed="true">
+    <Position X="11" Y="4.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAQAQBQAAAAAAAAAAAGAAQgAAAAAAAAAAAgAAAACAA=</HashCode>
-      <FileName>include\dobject\dobjmemstate.h</FileName>
+      <FileName>include\DObject\DObjMemState.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DObject::CDObjUuid">
@@ -81,13 +81,6 @@
       <FileName>include\DObject\DObjUuid.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::CDObjMemStateListe">
-    <Position X="11" Y="6" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAQAAAAAAAAAAAACAAIAAAAAAAAAQAAgAAAAAAA=</HashCode>
-      <FileName>include\dobject\dobjmemstate.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DObject::CDObject" Collapsed="true">
     <Position X="1.25" Y="3.25" Width="2" />
     <TypeIdentifier>
@@ -95,18 +88,11 @@
       <FileName>include\dobject\dobject.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DObject::CDObjBaseListe">
-    <Position X="1" Y="10.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
-      <FileName>include\DObject\DObjListe.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="DObject::DObjSaveGuard" Collapsed="true">
-    <Position X="6.25" Y="1.25" Width="2.5" />
+    <Position X="11" Y="3.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAQAACAAAQAAAAAAAIAAAAAAAIAgAAAwAAAAQAA=</HashCode>
-      <FileName>include\DObject\DObjSaveGuard.h</FileName>
+      <HashCode>gEAAAAQAAKAAAQEAAAAAAAAAAAAAAIAgIAAgAAAAAAA=</HashCode>
+      <FileName>include\dobject\dobjsaveguard.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

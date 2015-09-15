@@ -7,13 +7,27 @@
 
 #include "targetver.h"
 
+// En-têtes pour CppUnitTest
+#include "CppUnitTest.h"
+
+#include <vld.h>
+
+//
 #include <stdio.h>
 #include <tchar.h>
+
+#include <Windows.h>
 
 #include <string>
 #include <vector>
 #include <sstream>
-#include <afxcontrolbars.h>
+
+
+// Linkage automatique avec la lib DObject
+#pragma comment(lib, "DObject.lib")
+#pragma comment(lib, "Outils.lib")
+#pragma comment(lib, "SQLite.lib")
+#pragma comment(lib, "RcReader.lib")
 
 
 // Création d'une trace
