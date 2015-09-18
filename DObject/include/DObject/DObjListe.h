@@ -43,7 +43,8 @@ namespace DObject
 		CDObjListe &operator=(const CDObjListe &source) = delete;
 		//! Clone les données
 		void ClonnerDonnees(const CDObjListe &source) { 
-			__super::ClonnerDonnees(source);
+			CDObjState::ClonnerDonnees(source);
+			CDObject::ClonnerDonnees(source);
 			Copy(source);
 		};
 
