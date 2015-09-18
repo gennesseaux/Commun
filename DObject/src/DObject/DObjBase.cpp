@@ -70,6 +70,8 @@ namespace DObject
 		CDObjUuid::ClonnerDonnees(source);
 		CDObjState::ClonnerDonnees(source);
 		CDObject::ClonnerDonnees(source);
+
+		m_ulId = source.m_ulId;
 	}
 	
 	//! Notification d'évènement
