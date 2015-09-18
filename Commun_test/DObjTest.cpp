@@ -193,10 +193,27 @@ namespace DObject
 		// SaveGuard
 		DObjSaveGuard::Start(this);
 
-
 		//
 		if(_string1 == "DoNotDelete")
 			return DObjSaveGuard::Error(this);
+
+		if(_pointeurListe1)
+		{
+			_pointeurListe1->SetPourSupprimer(true,true);
+
+			if(!_pointeurListe1->Supprimer())
+				return DObject::DObjSaveGuard::Error(this);
+		}
+
+		if(_pointeurListe2)
+		{
+			_pointeurListe2->SetPourSupprimer(true,true);
+
+			if(!_pointeurListe2->Supprimer())
+			{
+				return DObject::DObjSaveGuard::Error(this);
+			}
+		}
 
 		// ...
 		// Mettre ici le code avant suppression de l'objet

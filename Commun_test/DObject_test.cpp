@@ -891,5 +891,19 @@ namespace Commun_test
 			delete t1;
 			delete t2;
 		}
+
+		TEST_METHOD(DObjectTest30)
+		{
+			CDObjTest* p1 = new CDObjTest(1);	p1->SetString("Parent");			p1->SetAcquis(true);
+			CDObjTest* e1 = new CDObjTest(1);	e1->SetString("(e1) Enfant");		e1->SetAcquis(true);
+
+			p1->GetPointeurListe1()->Add(e1);
+
+			p1->SetPourSupprimer(true);
+			if(p1->Supprimer())
+				p1 = nullptr;
+
+			delete p1;
+		}
 	};
 }

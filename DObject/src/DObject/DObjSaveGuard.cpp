@@ -52,7 +52,7 @@ namespace DObject
 		if(SaveGuard()._pDObjState == pDObjState)
 		{
 			// Notifications
-			for(unsigned i=0; i<SaveGuard()._memState.size(); i++)
+			for(unsigned int i=0; i<SaveGuard()._memState.size(); i++)
 			{
 				CDObjState* pObjStateTemp = SaveGuard()._memState[i]->m_pObjState;
 
@@ -61,7 +61,7 @@ namespace DObject
 			}
 
 			// Suppression des pointeurs
-			for(unsigned i=SaveGuard()._toDelete.size(); i-->0;)
+			for (unsigned int i=0;i<SaveGuard()._toDelete.size();i++)
 				delete SaveGuard()._toDelete[i]->GetDObject();
 			SaveGuard().clear();
 		}
