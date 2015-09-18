@@ -29,6 +29,16 @@ namespace DObject
 		return *this;
 	}
 
+	//! Clone les données de l'objet.
+	void CDObjState::ClonnerDonnees(const CDObjState &source)
+	{
+		m_bInitaliser		= source.m_bInitaliser;
+		m_bModifier			= source.m_bModifier;
+		m_bPourSupprimer	= source.m_bPourSupprimer;
+		m_bAcquis			= source.m_bAcquis;
+		m_bSupprimer		= source.m_bSupprimer;
+	}
+
 	//! Opérateur ==
 	bool CDObjState::operator==( const CDObjState &source ) const
 	{
@@ -43,16 +53,6 @@ namespace DObject
 	bool CDObjState::operator!=( const CDObjState &source ) const
 	{
 		return !(*this == source);
-	}
-
-	//! Clone les données de l'objet.
-	void CDObjState::ClonnerDonnees(const CDObjState &source)
-	{
-		m_bInitaliser		= source.m_bInitaliser;
-		m_bModifier			= source.m_bModifier;
-		m_bPourSupprimer	= source.m_bPourSupprimer;
-		m_bAcquis			= source.m_bAcquis;
-		m_bSupprimer		= source.m_bSupprimer;
 	}
 
 	bool CDObjState::EstInitialiser() const

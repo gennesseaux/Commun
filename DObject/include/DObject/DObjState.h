@@ -34,12 +34,13 @@ namespace DObject
 		//! Opérateur =
 		CDObjState &operator=(const CDObjState &source);
 
+		//! Clone les données de l'objet.
+		void ClonnerDonnees(const CDObjState &source);
+
 		//! Opérateur ==
 		bool operator==(const CDObjState &source) const;
 		//! Opérateur !=
 		bool operator!=(const CDObjState &source) const;
-		//! Clone les données de l'objet.
-		void ClonnerDonnees(const CDObjState &source);
 
 	public:
 		virtual CDObject* GetDObject() = 0;

@@ -857,5 +857,26 @@ namespace Commun_test
 
 			delete t1;
 		}
+
+		TEST_METHOD(DObjectTest29)
+		{
+			CDObjTest* t1 = new CDObjTest(1);	t1->SetString("Parent");			t1->SetAcquis(true);
+			CDObjTest* t2 = new CDObjTest(1);	t2->SetString("(t2) Enfant");		t2->SetAcquis(true);
+			t2->AddOwner(t1);
+
+			Assert::IsTrue(t2->GetOwnerCount()==1);
+			Assert::IsTrue(t1->GetChildCount()==1);
+
+			CDObjTest c1 = CDObjTest(*t1);
+			Assert::IsTrue(t1->GetChildCount()==1);
+			Assert::IsTrue(c1.GetChildCount()==1);
+			Assert::IsTrue(t2->GetOwnerCount()==2);
+
+			CDObjTest c2 = CDObjTest(*t2);
+			Assert::IsTrue(c2.GetOwnerCount()==2);
+
+			delete t1;
+			delete t2;
+		}
 	};
 }

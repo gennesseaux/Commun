@@ -32,6 +32,8 @@ namespace DObject
 		CDObject(const CDObject &source);														
 		//! Opérateur =
 		CDObject &operator=(const CDObject &source);
+		//! Clone les données (Utilisé par le constructeur par copie et l'opérateur =)
+		void ClonnerDonnees(const CDObject &source);
 
 	// Gestion des relations parent enfant
 	public:
@@ -67,9 +69,9 @@ namespace DObject
 		//! Retourne le premier parent
 		CDObject* GetOwner();
 		//! Retourne un parent en fonction de son index dans la liste
-		CDObject* GetOwner(int iIndex);
+		CDObject* GetOwner(unsigned int iIndex);
 		//! Retourne un enfant en fonction de son index dans la liste
-		CDObject* GetChild(int iIndex);
+		CDObject* GetChild(unsigned int iIndex);
 
 	private:
 		// Gestion des relations parent enfant

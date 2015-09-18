@@ -22,6 +22,11 @@
     <ClCompile Include="src\RcReader\RcResourceControl.cpp" />
     <ClCompile Include="src\RcReader\RcResourceDialog.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Outils\Outils.vcxproj">
+      <Project>{407d9119-86dd-4ce1-8e3d-37a00bcd3849}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{966A6830-49CF-43C3-8FAD-D8BF4A6054CC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -73,7 +78,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\bin;..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
     </Lib>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -96,7 +101,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\bin;..\..\..\..\Poco\lib</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

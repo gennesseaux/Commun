@@ -25,6 +25,39 @@ namespace DObject
 	{
 	}
 
+	//! Constructeur par recopie
+	CDObjUuid::CDObjUuid(const CDObjUuid& source)
+	{
+		ClonnerDonnees(source);
+	}
+
+	//! Opérateur =
+	CDObjUuid& CDObjUuid::operator=(const CDObjUuid& source)
+	{
+		if(this != &source)
+			ClonnerDonnees(source);
+
+		return *this;
+	}
+
+	//! Clone les données de l'objet.
+	void CDObjUuid::ClonnerDonnees(const CDObjUuid &source)
+	{
+		RPC_WSTR szUuid = NULL;
+		if(::UuidToString(&source.m_uuid,&szUuid) != RPC_S_OK)
+		{
+			::RpcStringFree(&szUuid);
+			::UuidCreateNil(&m_uuid);
+		}
+
+		if(::UuidFromString(szUuid,&m_uuid) != RPC_S_OK)
+		{
+			::RpcStringFree(&szUuid);
+			::UuidCreateNil(&m_uuid);
+		}
+		::RpcStringFree(&szUuid);
+	}
+
 	//! Opérateur ==
 	bool CDObjUuid::operator==( const CDObjUuid &source ) const
 	{

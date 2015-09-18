@@ -24,21 +24,30 @@ namespace DObject
 	{
 		notifyClient(DObjEvent::ObjetSupprimerEvent);
 
-		for(unsigned i=m_vOwners.size();i-->0;)
+		for(unsigned int i=m_vOwners.size();i-->0;)
 			this->RemoveOwner(m_vOwners[i]);
-		for(unsigned i=m_vChilds.size();i-->0;)
+		for(unsigned int i=m_vChilds.size();i-->0;)
 			this->RemoveChild(m_vChilds[i]);
 	}
 
 	//! Constructeur par recopie
 	CDObject::CDObject(const CDObject& source)
 	{
+		ClonnerDonnees(source);
 	}
 
 	//! Opérateur =
 	CDObject& CDObject::operator=(const CDObject& source)
 	{
 		return *this;
+	}
+	
+	void CDObject::ClonnerDonnees(const CDObject &source)
+	{
+		for(unsigned int i=0;i<source.m_vOwners.size();i++)
+			this->AddOwner(source.m_vOwners[i]);
+		for(unsigned i=0;i<source.m_vChilds.size();i++)
+			this->AddChild(source.m_vChilds[i]);
 	}
 
 	//! Ajout d'un parent
@@ -162,13 +171,13 @@ namespace DObject
 	}
 
 	//! Retourne un parent en fonction de son indxex dans la liste
-	CDObject* CDObject::GetOwner(int iIndex)
+	CDObject* CDObject::GetOwner(unsigned int iIndex)
 	{
 		return m_vOwners[iIndex];
 	}
 
 	//! Retourne un enfant en fonction de son indxex dans la liste
-	CDObject* CDObject::GetChild(int iIndex)
+	CDObject* CDObject::GetChild(unsigned int iIndex)
 	{
 		return m_vChilds[iIndex];
 	}

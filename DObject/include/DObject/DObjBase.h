@@ -27,10 +27,11 @@ namespace DObject
 	public:
 		//! Constructeur
 		CDObjBase(unsigned long ulId = DefULong, CDObject* pOwner = nullptr);
-		//! Constructeur par copie
-		CDObjBase(const CDObjBase &source);														
 		//! Destructeur
 		virtual ~CDObjBase(void);
+
+		//! Constructeur par copie
+		CDObjBase(const CDObjBase &source);														
 		//! Opérateur =
 		CDObjBase &operator=(const CDObjBase &source);
 		//! Clone les données (Utilisé par le constructeur par copie et l'opérateur =)

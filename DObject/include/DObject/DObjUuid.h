@@ -27,17 +27,18 @@ namespace DObject
 		//! Destructeur
 		virtual ~CDObjUuid(void);
 
+		//! Constructeur par copie.
+		CDObjUuid(const CDObjUuid &source);
+		//! Opérateur =
+		CDObjUuid &operator=(const CDObjUuid &source);
+
+		//! Clone les données de l'objet.
+		void ClonnerDonnees(const CDObjUuid &source);
+
 		//! Opérateur ==
 		bool operator==(const CDObjUuid &source) const;
 		//! Opérateur !=
 		bool operator!=(const CDObjUuid &source) const;
-
-
-	protected:
-		//! Constructeur par copie.
-		CDObjUuid(const CDObjUuid &source) = delete;
-		//! Opérateur =
-		CDObjUuid &operator=(const CDObjUuid &source) = delete;
 
 
 	public:

@@ -67,9 +67,9 @@ namespace DObject
 	//! Clone les données de l'objet.
 	void CDObjBase::ClonnerDonnees(const CDObjBase &source)
 	{
+		CDObjUuid::ClonnerDonnees(source);
 		CDObjState::ClonnerDonnees(source);
-
-		m_ulId = source.m_ulId;
+		CDObject::ClonnerDonnees(source);
 	}
 	
 	//! Notification d'évènement
