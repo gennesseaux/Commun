@@ -871,9 +871,22 @@ namespace Commun_test
 			Assert::IsTrue(t1->GetChildCount()==1);
 			Assert::IsTrue(c1.GetChildCount()==1);
 			Assert::IsTrue(t2->GetOwnerCount()==2);
+			Assert::IsTrue(c1.GetId()==t1->GetId());
+			Assert::IsTrue(c1.GetLPGUID()->Data1==t1->GetLPGUID()->Data1);
+			Assert::IsTrue(c1.GetLPGUID()->Data2==t1->GetLPGUID()->Data2);
+			Assert::IsTrue(c1.GetLPGUID()->Data3==t1->GetLPGUID()->Data3);
+			// Pas de tests sur Data4 car unsigned char
+			//Assert::IsTrue(c1.GetLPGUID()->Data4==t1->GetLPGUID()->Data4);
 
 			CDObjTest c2 = CDObjTest(*t2);
 			Assert::IsTrue(c2.GetOwnerCount()==2);
+			Assert::IsTrue(c1.GetId()==t1->GetId());
+			Assert::IsTrue(c2.GetId()==t2->GetId());
+			Assert::IsTrue(c2.GetLPGUID()->Data1==t2->GetLPGUID()->Data1);
+			Assert::IsTrue(c2.GetLPGUID()->Data2==t2->GetLPGUID()->Data2);
+			Assert::IsTrue(c2.GetLPGUID()->Data3==t2->GetLPGUID()->Data3);
+			// Pas de tests sur Data4 car unsigned char
+			//Assert::IsTrue(c2.GetLPGUID()->Data4==t2->GetLPGUID()->Data4);
 
 			delete t1;
 			delete t2;
