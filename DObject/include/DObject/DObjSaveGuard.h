@@ -22,7 +22,7 @@ namespace DObject
 	class DObjSaveGuard
 	{
 	public:
-		static DObjSaveGuard & SaveGuard()
+		static DObjSaveGuard& SaveGuard()
 		{
 			// Since it's a static variable, if the class has already been created,
 			// It won't be created again.
@@ -34,14 +34,13 @@ namespace DObject
 			return _instance;
 		}
 
-	public:
+	protected:
 		//! Constructeur
 		DObjSaveGuard();
 		//! Destructeur
 		virtual ~DObjSaveGuard(void);
 
-	public:
-		// delete copy and move constructors and assign operators
+	protected:
 		DObjSaveGuard(DObjSaveGuard const&) = delete;             // Copy construct
 		DObjSaveGuard(DObjSaveGuard&&) = delete;                  // Move construct
 		DObjSaveGuard& operator=(DObjSaveGuard const&) = delete;  // Copy assign

@@ -898,6 +898,7 @@ namespace Commun_test
 			CDObjTest* e1 = new CDObjTest(1);	e1->SetString("(e1) Enfant");		e1->SetAcquis(true);
 
 			p1->GetPointeurListe1()->Add(e1);
+			e1->AddOwner(p1);
 
 			p1->SetPourSupprimer(true);
 			if(p1->Supprimer())
