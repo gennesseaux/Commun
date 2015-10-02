@@ -9,6 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <SQLiteCpp/Database.h>
 #include <SQLiteCpp/Transaction.h>
+#include <SQLite/SQLiteSource.h>
 
 
 namespace Commun_test
@@ -46,6 +47,34 @@ namespace Commun_test
 			{
 				std::cout << "exception: " << e.what() << std::endl;
 			}
+		}
+
+		TEST_METHOD(SQLiteSource1)
+		{
+			// Création d'une nouvelle base
+			SQLite::CSQLiteSource sqlite;
+			sqlite.New();
+
+			// Début  de la transaction
+			SQLite::AutoTransaction trans(&sqlite);
+
+			//
+			sqlite.GetDataBase()->exec("DROP TABLE IF EXISTS test");
+			sqlite.GetDataBase()->exec("CREATE TABLE test (id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT)");
+
+			// Fin de la transaction
+			trans.rollback();
+
+			// fermeture de la base
+			sqlite.Close();
+		}
+
+		TEST_METHOD(SQLiteSource2)
+		{
+			// Création d'une nouvelle base
+			SQLite::CSQLiteSource sqlite;
+			sqlite.Open();
+			sqlite.Close();
 		}
 
 	};
