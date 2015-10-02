@@ -4,16 +4,9 @@
 
 
 // Inculions STL
-#include <algorithm>
+#include <string>
 #include <functional> 
 #include <cctype>
-#include <locale>
-#include <string>
-
-// Inclusion Poco
-#include <Poco/Foundation.h>
-#include <Poco/Format.h>
-#include <Poco/String.h>
 
 
 namespace StringTools

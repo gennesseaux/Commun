@@ -2,6 +2,11 @@
 // Inculions
 #include "Outils/StringTools.h"
 
+// Inclusion Poco
+#include <Poco/Foundation.h>
+#include <Poco/Format.h>
+#include <Poco/String.h>
+
 
 bool StringTools::starts_with(const std::string& str,const std::string& prefix)
 {
