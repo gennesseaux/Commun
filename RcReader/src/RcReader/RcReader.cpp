@@ -15,6 +15,7 @@
 
 // Inclusions : Poco
 #include <Poco/Foundation.h>
+#include <Poco/Path.h>
 #include <Poco/File.h>
 #include <Poco/FileStream.h>
 #include <Poco/String.h>
@@ -52,11 +53,16 @@ namespace RcReader
 	//! Constructeur
 	CRcReader::CRcReader(std::string sCheminFichierRC)
 	{
-		m_sFichierRc = sCheminFichierRC;
+		try
+		{
+			Poco::File f(sCheminFichierRC);
+			if(!f.exists()) return;
+			if(!f.isFile()) return;
 
-		Poco::File f(sCheminFichierRC);
-		if(f.exists())
+			m_sFichierRc = sCheminFichierRC;
 			parse();
+		}
+		catch(...) {}
 	}
 
 	//! Destructeur

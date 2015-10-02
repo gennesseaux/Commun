@@ -42,6 +42,7 @@ namespace RcReader
 		void parse();
 
 	public:
+		std::string GetFichierRc() const { return m_sFichierRc; }
 		int GetDialogCount() { return m_lstDialog.size(); }
 		CRcResourceDialog* GetDialog(int iIndex) { return m_lstDialog[iIndex]; }
 
