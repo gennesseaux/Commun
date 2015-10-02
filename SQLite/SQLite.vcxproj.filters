@@ -9,7 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\SQLite\TransactionEx.h" />
     <ClInclude Include="include\sqlite3\sqlite3.h">
       <Filter>SQLite3</Filter>
     </ClInclude>
@@ -34,9 +33,12 @@
     <ClInclude Include="include\SQLiteCpp\Transaction.h">
       <Filter>SQLiteCpp</Filter>
     </ClInclude>
+    <ClInclude Include="include\SQLite\TransactionEx.h">
+      <Filter>SQLiteCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SQLite\SQLiteSource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\SQLite\TransactionEx.cpp" />
     <ClCompile Include="src\sqlite3\sqlite3.c">
       <Filter>SQLite3</Filter>
     </ClCompile>
@@ -52,5 +54,9 @@
     <ClCompile Include="src\SQLiteCpp\Transaction.cpp">
       <Filter>SQLiteCpp</Filter>
     </ClCompile>
+    <ClCompile Include="src\SQLite\TransactionEx.cpp">
+      <Filter>SQLiteCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SQLite\SQLiteSource.cpp" />
   </ItemGroup>
 </Project>

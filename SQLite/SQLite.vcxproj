@@ -19,6 +19,7 @@
     <ClInclude Include="include\SQLiteCpp\SQLiteCpp.h" />
     <ClInclude Include="include\SQLiteCpp\Statement.h" />
     <ClInclude Include="include\SQLiteCpp\Transaction.h" />
+    <ClInclude Include="include\SQLite\SQLiteSource.h" />
     <ClInclude Include="include\SQLite\TransactionEx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +28,7 @@
     <ClCompile Include="src\SQLiteCpp\Database.cpp" />
     <ClCompile Include="src\SQLiteCpp\Statement.cpp" />
     <ClCompile Include="src\SQLiteCpp\Transaction.cpp" />
+    <ClCompile Include="src\SQLite\SQLiteSource.cpp" />
     <ClCompile Include="src\SQLite\TransactionEx.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -70,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;..\Outils\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -89,7 +91,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;..\Outils\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
