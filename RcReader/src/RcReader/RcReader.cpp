@@ -23,6 +23,7 @@
 
 // Inclusions : STL
 #include <assert.h>
+#include <algorithm>
 #include <Outils/StringTools.h>
 
 using namespace StringTools;
@@ -82,6 +83,7 @@ namespace RcReader
 		return istr;
 	}
 
+	// Parse le fichier de ressource
 	void CRcReader::parse()
 	{
 		// Ouverture du fichier
@@ -581,6 +583,33 @@ namespace RcReader
 
 		// Une fois récupérées les ressources sont triées par ordre alphabétique
 		std::sort(m_lstDialog.begin(), m_lstDialog.end(), CRcResourceDialog::CompareId);
+	}
+
+	// Retourne le nom du fichier de ressource
+	std::string CRcReader::GetFichierRc() const
+	{
+		return m_sFichierRc;
+	}
+
+	// Nombre de ressource de type Dialog contenues dans le fichier de ressource
+	int CRcReader::GetDialogCount()
+	{
+		return m_lstDialog.size();
+	}
+
+	// Retourne la ressource de type Dialog en fonction de sa position dans la liste
+	CRcResourceDialog* CRcReader::GetDialog(int iIndex)
+	{
+		return m_lstDialog[iIndex];
+	}
+
+	// Retourne la ressource de type Dialog en fonction de son identifiant (Nom)
+	CRcResourceDialog* CRcReader::GetDialog(std::string resId)
+	{
+		auto it = std::find_if(m_lstDialog.begin(),m_lstDialog.end(),[=](CRcResourceDialog* pResDialog) { return pResDialog->GetId().compare(resId) == 0; });
+		if(it != m_lstDialog.end())
+			return *it;
+		return nullptr;
 	}
 
 }

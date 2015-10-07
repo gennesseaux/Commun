@@ -39,12 +39,18 @@ namespace RcReader
 		CRcReader &operator=(const CRcReader &source) = delete;
 
 	protected:
+		// Parse le fichier de ressource
 		void parse();
 
 	public:
-		std::string GetFichierRc() const { return m_sFichierRc; }
-		int GetDialogCount() { return m_lstDialog.size(); }
-		CRcResourceDialog* GetDialog(int iIndex) { return m_lstDialog[iIndex]; }
+		// Retourne le nom du fichier de ressource
+		std::string GetFichierRc() const;
+		// Nombre de ressource de type Dialog contenues dans le fichier de ressource
+		int GetDialogCount();
+		// Retourne la ressource de type Dialog en fonction de sa position dans la liste
+		CRcResourceDialog* GetDialog(int iIndex);
+		// Retourne la ressource de type Dialog en fonction de son identifiant (Nom)
+		CRcResourceDialog* GetDialog(std::string resId);
 
 	protected:
 		std::string m_sFichierRc;
