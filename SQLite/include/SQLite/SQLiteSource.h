@@ -1,11 +1,14 @@
 
 #pragma once
 
+// Inclusions
+#include <windows.h>
+#include <assert.h>
+
 // Inclusions STL
 #include <string>
 #include <sstream>
 #include <memory>
-
 
 // Inclusions
 #include <Outils/StringTools.h>
@@ -34,7 +37,7 @@ namespace SQLite
 		SQLite::TransactionEx*		GetTransaction();
 
 		// Création d'une base de données par défaut
-		SQLite::Database*			New();
+		SQLite::Database*			New(std::string sFileName = "");
 		// Ouverture d'une base de données
 		SQLite::Database*			Open(std::string sFileName);
 		// Ouverture de la base de donnée active
@@ -95,7 +98,7 @@ namespace SQLite
 	{
 	public:
 		// Constructeur
-		AutoTransaction(CSQLiteSource* pSqlite);
+		AutoTransaction(SQLite::TransactionEx* pTransaction);
 		// Destructeur
 		~AutoTransaction();
 
@@ -115,21 +118,20 @@ namespace SQLite
 		AutoTransaction& AutoTransaction::operator=(AutoTransaction&&) = delete;
 
 	private:
-		CSQLiteSource* _pSqlite = nullptr;
+		SQLite::TransactionEx* _pTransaction = nullptr;
 		bool _bAutoTransaction = true;
 	};
 
-	/*
+	
 	// Début d'une transaction automatique
-#define __TRANSACTION_AUTO_DEBUT__				\
- 		AutoTransaction _Autotransaction;
+	#define __TRANSACTION_AUTO_DEBUT__(pTransaction) \
+ 		SQLite::AutoTransaction _Autotransaction(pTransaction);
 
 	// fin d'une transaction automatique avec annulation de la transaction
-#define __TRANSACTION_AUTO_ANNULE__			\
+	#define __TRANSACTION_AUTO_ANNULE__	\
  		_Autotransaction.rollback();
 
 	// fin d'une transaction automatique avec validation de la transaction
-#define __TRANSACTION_AUTO_VALIDE__			\
+	#define __TRANSACTION_AUTO_VALIDE__	\
  		_Autotransaction.commit();
-	*/
 }

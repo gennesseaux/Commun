@@ -61,8 +61,8 @@ CSQLiteSource::CSQLiteSource() : m_pDatabase(nullptr), m_pTransaction(nullptr)
 // Destructeur
 CSQLiteSource::~CSQLiteSource()
 {
-	delete m_pTransaction;	m_pTransaction = nullptr;
-	delete m_pDatabase;		m_pDatabase = nullptr;
+	// fermeture de la base
+	Close();
 
 	if(!m_sTempFilename.empty() && std::ifstream(m_sTempFilename))
 		std::remove(m_sTempFilename.c_str());
@@ -81,8 +81,12 @@ SQLite::TransactionEx* CSQLiteSource::GetTransaction()
 }
 
 // Création d'une base de données par défaut
-SQLite::Database* CSQLiteSource::New()
+SQLite::Database* CSQLiteSource::New(std::string sFileName)
 {
+	// Chemin de la base de données par défaut
+	if(sFileName.empty()==false)
+		m_sDataBaseFilename = sFileName;
+
 	// Chemin de la base de données par défaut
 	if(m_sDataBaseFilename.empty())
 	{
@@ -90,12 +94,8 @@ SQLite::Database* CSQLiteSource::New()
 		m_sDataBaseFilename = m_sTempFilename;
 	}
 
-	// Suppression du pointeur vers la base de donnée
-	if (m_pDatabase)
-	{
-		delete m_pTransaction;	m_pTransaction = nullptr;
-		delete m_pDatabase;		m_pDatabase = nullptr;
-	}
+	// fermeture de la base
+	Close();
 
 	// Suppression de la base par défaut si elle existe
 	if(std::ifstream(m_sDataBaseFilename))
@@ -130,9 +130,10 @@ SQLite::Database* CSQLiteSource::Open(std::string sFileName)
 	// Si la base de données ne correspond pas au nom alors on ouvre la base de données demandée
 	if (m_pDatabase && m_pDatabase->getFilename().compare(m_sDataBaseFilename)!=0)
 	{
-		delete m_pTransaction;	m_pTransaction = nullptr;
-		delete m_pDatabase;		m_pDatabase = nullptr;
+		// Fermeture de la base
+		Close();
 
+		// Ouverture la base
 		return Open(sFileName);
 	}
 
@@ -175,9 +176,8 @@ SQLite::Database* CSQLiteSource::SaveAs(std::string sFileName)
 	if (m_pDatabase == nullptr)
 		return nullptr;
 
-	// Suppression du pointeur sur la base opur éviter toute violation d'accès
-	delete m_pTransaction;	m_pTransaction = nullptr;
-	delete m_pDatabase;		m_pDatabase = nullptr;
+	// Fermeture de la base
+	Close();
 
 	// Suppression de la base si elle existe
 	if(std::ifstream(sFileName))
@@ -186,7 +186,7 @@ SQLite::Database* CSQLiteSource::SaveAs(std::string sFileName)
 	// Déplacement du fichier
 	std::ifstream ifs(m_sDataBaseFilename,std::ios::in | std::ios::binary);
 	std::ofstream ofs(sFileName,std::ios::out | std::ios::binary);
-	ofs << ifs.rdbuf();
+	ofs << ifs.rdbuf(); ifs.close(); ofs.close();
 
 	// Ouverture de la base déplacée
 	return Open(sFileName);
@@ -200,23 +200,23 @@ SQLite::Database* CSQLiteSource::SaveAs(std::string sFileName)
 
 
 // Constructeur
-AutoTransaction::AutoTransaction(CSQLiteSource* pSqlite)
+AutoTransaction::AutoTransaction(SQLite::TransactionEx* pTransaction)
 {
-	_pSqlite = pSqlite;
+	_pTransaction = pTransaction;
 
-	if(_pSqlite->GetTransaction()->IsTransactionActive())
+	if(_pTransaction->IsTransactionActive())
 		_bAutoTransaction = false;
 	if(_bAutoTransaction)
-		_pSqlite->GetTransaction()->begin();
+		_pTransaction->begin();
 }
 
 // Destructeur
 AutoTransaction::~AutoTransaction()
 {
-	if(_bAutoTransaction && _pSqlite->GetTransaction()->IsTransactionActive())
+	if(_bAutoTransaction && _pTransaction->IsTransactionActive())
 		rollback();
 
-	_pSqlite = nullptr;
+	_pTransaction = nullptr;
 }
 
 // Commit
@@ -224,7 +224,7 @@ void AutoTransaction::commit()
 {
 	if (_bAutoTransaction)
 	{
-		_pSqlite->GetTransaction()->commit();
+		_pTransaction->commit();
 		_bAutoTransaction = false;
 	}
 }
@@ -234,7 +234,7 @@ void AutoTransaction::rollback()
 {
 	if (_bAutoTransaction)
 	{
-		_pSqlite->GetTransaction()->rollback();
+		_pTransaction->rollback();
 		_bAutoTransaction = false;
 	}
 }
