@@ -45,16 +45,20 @@ namespace RcReader
 		void AddControl(CRcControle& rcControle , std::string sId, std::string& sTexte);
 
 	public:
-		std::string GetId() const { return m_sId; }
-
-		int GetControlCount() { return m_lstControl.size(); }
-		CRcResourceControl& GetControl(int iIndex) { return m_lstControl[iIndex]; }
+		//! Identifiant de la ressource de type Dialog
+		std::string GetId() const;
+		//! Nombre de contrôles dans la ressource
+		int GetControlCount();
+		//! Retourne le contrôle contenu dans la ressource en fonction de sa position dans la liste
+		CRcResourceControl* GetControl(int iIndex);
+		//! Retourne le contrôle contenu dans la ressource en fonction de son identifiant (Nom)
+		CRcResourceControl* GetControl(std::string ctrlId);
 
 	public:
 		static bool CompareId(const CRcResourceDialog* _Left, const CRcResourceDialog* _Right) { return (_Left->m_sId < _Right->m_sId); }
 
 	protected:
 		std::string	m_sId;
-		std::vector<CRcResourceControl> m_lstControl;
+		std::vector<CRcResourceControl*> m_lstControl;
 	};
 }
