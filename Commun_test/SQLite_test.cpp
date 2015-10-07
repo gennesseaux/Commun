@@ -56,7 +56,7 @@ namespace Commun_test
 			sqlite.New();
 
 			// Début  de la transaction
-			SQLite::AutoTransaction trans(&sqlite);
+			SQLite::AutoTransaction trans(sqlite.GetTransaction());
 
 			//
 			sqlite.GetDataBase()->exec("DROP TABLE IF EXISTS test");
